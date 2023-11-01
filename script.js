@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let wordBank = [];
   let wordToGuess = "";
   let attemptsLeft = 6;
-  let history = [];
   let correctLetters = [];
   let incorrectPositions = [];
   let incorrectLetter = [];
