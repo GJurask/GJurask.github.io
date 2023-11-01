@@ -1,0 +1,218 @@
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
+
+  transition: background-color 1s, color 1s;
+}
+
+body.dark-theme {
+  background-color: #333;
+  color: #fff;
+
+  .letter {
+    background-color: #555;
+    border: 1px solid #777;
+  }
+
+  .wordle-container {
+    margin-top: 20px;
+    color: #fff;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  #guess-input {
+    padding: 10px;
+    margin: 10px;
+    text-transform: uppercase;
+    background-color: #555;
+    color: #fff;
+    border: 1px solid #777;
+  }
+
+  .button {
+    padding: 10px 20px;
+    background-color: #f7f603;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .word-display {
+    color: #000;
+  }
+}
+
+.wordle-container {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 1s, color 1s;
+}
+
+.word-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  transition: background-color 1s, color 1s;
+}
+
+.letter {
+  width: 40px;
+  height: 40px;
+  background-color: #d3d3d3;
+  border: 1px solid black;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  transition: background-color 1s, color 1s;
+
+  text-transform: uppercase;
+}
+
+#guess-input {
+  padding: 10px;
+  margin: 10px;
+  text-transform: uppercase;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #000;
+  transition: background-color 1s, color 1s;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 1s, color 1s;
+}
+
+.attempts {
+  margin-top: 10px;
+}
+
+.result-message {
+  font-weight: bold;
+}
+
+#toast {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(231, 76, 60, 0.9);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 999;
+  transition: top 0.3s, opacity 0.3s;
+}
+
+#toast.active {
+  top: 10px;
+  opacity: 1;
+  transition: top 0.3s, opacity 0.3s;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.key {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+#theme-toggle-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate(-5px, 0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate(5px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+#confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti {
+  width: 10px;
+  height: 10px;
+  background-color: #ffec40;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 1;
+  transform: rotate(45deg);
+  pointer-events: none;
+  animation: confetti-fall 4s linear infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+  }
+  100% {
+    transform: translate(100vw, 100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
