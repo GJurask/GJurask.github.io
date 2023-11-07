@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "scripts": {
+    "start": "webpack serve",
+    "hh": "http-server",
+    "build": "webpack --mode production",
+    "local":"build npx http-server"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}

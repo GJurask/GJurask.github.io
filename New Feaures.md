@@ -1,6 +1,15 @@
+/* npm run build */
 
+pontuação - qntd letras - qtde tentativas restantes - qtde letras já descobertas. qnates de tentar já tem uma pontuação caso acerte, se não acerttar, atualiza pontuação que vale, pode mostrar em tempo real.
+
+dois worldes
+
+como colocar banco?
+
+dicas
 
 digitar nos quadrados
+
 
 bonequinho se desmembrando
 

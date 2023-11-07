@@ -12,8 +12,51 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         wordBank = data.split("\n");
         initializeGame();
+        getPontuacoes();
       })
       .catch((error) => console.error("Erro ao carregar o arquivo:", error));
+  }
+
+  async function getPontuacoes() {
+    try {
+      const response = await fetch(
+        "https://seed-unexpected-rhythm.glitch.me/pontuacoes"
+      ); // Replace with your API endpoint
+
+      if (response.ok) {
+        const scoreboardTable = document.getElementById("scoreboard");
+        const scoreboardBody = scoreboardTable.querySelector("tbody");
+        while (scoreboardBody.firstChild) {
+          scoreboardBody.removeChild(scoreboardBody.firstChild);
+        }
+
+        const scores = await response.json();
+
+        scores.forEach((score) => {
+          const row = document.createElement("tr");
+          const playerNameCell = document.createElement("td");
+          const playerScoreCell = document.createElement("td");
+          const playerWordCell = document.createElement("td");
+          const playerDataCell = document.createElement("td");
+
+          playerNameCell.textContent = score.nome;
+          playerScoreCell.textContent = score.pontuacao;
+          playerWordCell.textContent = score.palavra;
+          playerDataCell.textContent = score.data;
+
+          row.appendChild(playerNameCell);
+          row.appendChild(playerScoreCell);
+          row.appendChild(playerWordCell);
+          row.appendChild(playerDataCell);
+
+          scoreboardBody.appendChild(row);
+        });
+      } else {
+        console.error("Failed to fetch scores:", response.status);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   function chooseRandomWord() {

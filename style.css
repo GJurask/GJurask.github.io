@@ -46,6 +46,26 @@ body.dark-theme {
   .word-display {
     color: #000;
   }
+
+  #scoreboard th {
+    color: #fff;
+  }
+  #scoreboard {
+    background-color: #315;
+    color: #fff;
+  }
+
+  #scoreboard thead {
+    background-color: #315;
+  }
+
+  #scoreboard tbody tr:nth-child(even) {
+    background-color: #444;
+  }
+
+  #scoreboard tbody tr:nth-child(odd) {
+    background-color: #333;
+  }
 }
 
 .wordle-container {
@@ -215,4 +235,32 @@ body.dark-theme {
     transform: translate(100vw, 100vh) rotate(45deg);
     opacity: 0;
   }
+}
+/* Estilos para a tabela de classificação */
+#scoreboard {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #d7d7d7;
+  color: #333;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#scoreboard thead {
+  background-color: #d6d6d6;
+  color: #000;
+}
+
+#scoreboard th {
+  font-weight: bold;
+}
+
+/* Estilos para as linhas da tabela */
+#scoreboard tbody tr:nth-child(even) {
+  background-color: #d7d7d7;
+}
+
+#scoreboard tbody tr:nth-child(odd) {
+  background-color: #fff;
 }
