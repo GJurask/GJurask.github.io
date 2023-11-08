@@ -1,4 +1,8 @@
 
+colocar o timer em vermelho de 100 em 100 dps do 500
+barulho da bomba.
+
+criptogrfar o input que vem do back.
 
 digitar nos quadrados
 
