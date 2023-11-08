@@ -25,7 +25,8 @@ body.dark-theme {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
-  #guess-input {
+  #guess-input,
+  input {
     padding: 10px;
     margin: 10px;
     text-transform: uppercase;
@@ -45,6 +46,26 @@ body.dark-theme {
 
   .word-display {
     color: #000;
+  }
+
+  #scoreboard th {
+    color: #fff;
+  }
+  #scoreboard {
+    background-color: #315;
+    color: #fff;
+  }
+
+  #scoreboard thead {
+    background-color: #315;
+  }
+
+  #scoreboard tbody tr:nth-child(even) {
+    background-color: #444;
+  }
+
+  #scoreboard tbody tr:nth-child(odd) {
+    background-color: #333;
   }
 }
 
@@ -80,7 +101,8 @@ body.dark-theme {
   text-transform: uppercase;
 }
 
-#guess-input {
+#guess-input,
+input {
   padding: 10px;
   margin: 10px;
   text-transform: uppercase;
@@ -151,6 +173,20 @@ body.dark-theme {
   cursor: pointer;
 }
 
+.timer {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+}
+
+.pontos {
+  position: absolute;
+  top: 20px;
+  left: 100px;
+  z-index: 999;
+}
+
 #theme-toggle-container {
   position: absolute;
   top: 20px;
@@ -215,4 +251,70 @@ body.dark-theme {
     transform: translate(100vw, 100vh) rotate(45deg);
     opacity: 0;
   }
+}
+
+#scoreboard {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #d7d7d7;
+  color: #333;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 1200px;
+}
+
+#scoreboard thead {
+  background-color: #d6d6d6;
+  color: #000;
+}
+
+#scoreboard th {
+  font-weight: bold;
+}
+
+#scoreboard tbody tr:nth-child(even) {
+  background-color: #d7d7d7;
+}
+
+#scoreboard tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.scoreboard-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#scoreboard {
+  margin: 0 auto;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 20% auto;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
 }

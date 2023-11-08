@@ -9,6 +9,14 @@
   </head>
   <body class="dark-theme">
     <h1>Jurask Wordle</h1>
+    <div class="timer">
+      <strong>Tempo: </strong>
+      <p id="timer">00:00</p>
+    </div>
+    <div class="pontos">
+      <strong>Pontos: </strong>
+      <p id="pontos">2000</p>
+    </div>
 
     <div id="confetti-container"></div>
     <div id="theme-toggle-container">
@@ -17,7 +25,7 @@
 
     <div class="wordle-container">
       <div id="preencher"></div>
-      <input type="text" id="guess-input" />
+      <input class="input" type="text" id="guess-input" />
       <button class="button" id="guess-button">Dale</button>
       <div class="attempts">
         <p>Tentativas restantes: <span id="attempts-left"></span></p>
@@ -60,6 +68,34 @@
         <div class="key" data-key="N">N</div>
         <div class="key" data-key="M">M</div>
       </div>
+    </div>
+    <div id="modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-button" id="close-button">&times;</span>
+        <input
+          class="input"
+          type="text"
+          id="player-name"
+          placeholder="Seu nome"
+          maxlength="5"
+        />
+        <button class="button" id="save-score-button">Salvar Pontuação</button>
+      </div>
+    </div>
+
+    <div class="scoreboard-container">
+      <table id="scoreboard">
+        <thead>
+          <tr>
+            <th>Jogador</th>
+            <th>Pontuação</th>
+            <th>Palavra</th>
+            <th>Tempo</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
 
     <script src="script.js"></script>
