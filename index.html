@@ -20,7 +20,7 @@
 
     <div id="confetti-container"></div>
     <div id="theme-toggle-container">
-      <button class="button" id="theme-toggle">Alternar Tema</button>
+      <button class="button" id="config-toggle" >Configs</button>
     </div>
 
     <div class="wordle-container">
@@ -28,12 +28,12 @@
       <input class="input" type="text" id="guess-input" />
       <button class="button" id="guess-button">Dale</button>
       <div class="attempts">
-        <p>Tentativas restantes: <span id="attempts-left"></span></p>
+        <p id="attempts">
+          Tentativas restantes: <span id="attempts-left"></span>
+        </p>
       </div>
     </div>
-    <div class="result">
-      <p id="result-message"></p>
-    </div>
+
     <div id="toast" class="hidden"></div>
     <div class="keyboard">
       <div class="row">
@@ -69,9 +69,15 @@
         <div class="key" data-key="M">M</div>
       </div>
     </div>
-    <div id="modal" class="modal" style="display: none">
+    <div id="modal-fim" class="modal hide display-none">
       <div class="modal-content">
-        <span class="close-button" id="close-button">&times;</span>
+        <div class="result">
+          <p id="result-message">
+            Congrats! Você adivinhou a palavra, mesmo ela sendo full aleatória,
+            no plural, ou talvez você nunca ter ouvido falar nela.
+          </p>
+        </div>
+        <span class="close-button" id="close-button-fim">&times;</span>
         <input
           class="input"
           type="text"
@@ -80,6 +86,25 @@
           maxlength="5"
         />
         <button class="button" id="save-score-button">Salvar Pontuação</button>
+      </div>
+    </div>
+
+    <div id="modal-config" class="modal hide display-none">
+      <div class="modal-content">
+        <div class="config">
+          <p id="config-message">Configurações</p>
+        </div>
+        <div class="config-buttons">
+          <p id="config-message">Quantidade de letras:</p>
+          <span class="close-button" id="close-button-config">&times;</span>
+          <button class="button button-change-game" id="init-game-4">4</button>
+          <button class="button button-change-game" id="init-game-5">5</button>
+          <button class="button button-change-game" id="init-game-6">6</button>
+          <button class="button button-change-game" id="init-game-7">7</button>
+          <button class="button button-change-game" id="init-game-8">8</button>
+          <button class="button button-change-game" id="init-game-9">9</button>
+          <button class="button button-change-game" id="theme-toggle">Alternar Tema</button>
+        </div>
       </div>
     </div>
 

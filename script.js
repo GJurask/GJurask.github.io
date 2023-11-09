@@ -10,16 +10,17 @@ document.addEventListener("DOMContentLoaded", function () {
   let pontuacaoFinal = 2000;
 
   const API = "https://seed-unexpected-rhythm.glitch.me/";
-  async function lerArquivoEPreencherArray() {
+
+  async function lerArquivoEPreencherArray(size) {
     try {
-      const response = await fetch(API + "palavra");
+      const response = await fetch(API + `palavra/${size}`);
 
       if (response.ok) {
         const output = await response.json();
         wordToGuess = output.palavra.trim();
-        
-        initializeGame();
+
         getPontuacoes();
+        initializeGame();
       }
     } catch (error) {
       console.error("Error:", error);
@@ -117,8 +118,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const guessInput = document.getElementById("guess-input");
     guessInput.maxLength = wordToGuess.length;
 
+    attemptsLeft = 6;
+    correctLetters = [];
+    incorrectPositions = [];
+    incorrectLetter = [];
+    timer = 0;
+    pontuacaoFinal = 2000;
     document.getElementById("attempts-left").textContent = attemptsLeft;
 
+    criaGridLetras();
+    limparStyleKeys();
+  }
+
+  function initialize() {
     document
       .getElementById("guess-button")
       .addEventListener("click", checkGuess);
@@ -128,28 +140,47 @@ document.addEventListener("DOMContentLoaded", function () {
       .addEventListener("click", toggleTheme);
 
     document
-      .getElementById("save-score-button")
-      .addEventListener("click", function () {
-        const playerName = document.getElementById("player-name").value;
-        if (playerName.trim() === "") {
-          showToast("Digite seu nome para salvar a pontuação.");
-          return;
-        }
-
-        salvaPontos();
-
-        const modal = document.getElementById("modal");
-        modal.style.display = "none";
-      });
+      .getElementById("config-toggle")
+      .addEventListener("click", toggleConfig);
 
     document
-      .getElementById("close-button")
-      .addEventListener("click", function () {
-        const modal = document.getElementById("modal");
-        modal.style.display = "none";
-      });
+      .getElementById("save-score-button")
+      .addEventListener("click", saveScore);
 
+    document
+      .getElementById("close-button-fim")
+      .addEventListener("click", closeFim);
+
+    document
+      .getElementById("close-button-config")
+      .addEventListener("click", closeConfig);
+
+    const buttons = document.querySelectorAll(".button-change-game");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const size = parseInt(button.textContent);
+
+        if (!isNaN(size)) {
+          lerArquivoEPreencherArray(size);
+          closeConfig();
+        }
+      });
+    });
+
+    setTimeout(function () {
+      const nones = document.querySelectorAll(".display-none");
+
+      nones.forEach((none) => {
+        //none.classList.remove("display-none");
+      });
+    }, 2000);
+  }
+
+  function criaGridLetras() {
     const preencher = document.getElementById("preencher");
+    while (preencher.firstChild) {
+      preencher.removeChild(preencher.firstChild);
+    }
     for (let i = attemptsLeft; i > 0; i--) {
       const wordDisplay = document.createElement("div");
       wordDisplay.className = "word-display";
@@ -163,7 +194,66 @@ document.addEventListener("DOMContentLoaded", function () {
       preencher.appendChild(wordDisplay);
     }
   }
+  /*
+  function closeConfig() {
+    const modalConfig = document.getElementById("modal-config");
+    modalConfig.style.display = "none";
+  }
 
+  function closeFim() {
+    const modalFim = document.getElementById("modal-fim");
+    modalFim.style.display = "none";
+  }
+*/
+  function closeConfig() {
+    const modalConfig = document.getElementById("modal-config");
+    modalConfig.classList.add("hide");
+  }
+
+  function closeFim() {
+    const modalFim = document.getElementById("modal-fim");
+    modalFim.classList.add("hide");
+  }
+
+  function openFim() {
+    const modalFim = document.getElementById("modal-fim");
+    modalFim.classList.remove("hide");
+    modalFim.classList.add("show");
+  }
+
+  function saveScore() {
+    const playerName = document.getElementById("player-name").value;
+    if (playerName.trim() === "") {
+      showToast("Digite seu nome para salvar a pontuação.");
+      return;
+    }
+
+    salvaPontos();
+    closeFim();
+  }
+
+  function toggleConfig() {
+    const modalConfig = document.getElementById("modal-config");
+    if (modalConfig.classList.contains("hide")) {
+      modalConfig.classList.remove("hide");
+      modalConfig.classList.add("show");
+    } else {
+      //modalConfig.classList.remove("show");
+      modalConfig.classList.add("hide");
+    }
+  }
+
+  /*
+  function toggleConfig() {
+    const modal = document.getElementById("modal-config");
+    if (modal.style.display == "block") {
+      modal.style.display = "none";
+    } else {
+      modal.style.display = "block";
+    }
+  }
+
+*/
   function toggleTheme() {
     const body = document.body;
     if (body.classList.contains("dark-theme")) {
@@ -224,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const resultMessage = document.getElementById("result-message");
+    const resultMessage = document.getElementById("attempts");
     const wordDisplay = document.getElementById("word-display" + attemptsLeft);
     const letters = wordDisplay.querySelectorAll(".letter");
 
@@ -247,11 +337,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (correctCount === wordToGuess.length) {
       stopTimer();
-      resultMessage.textContent = "Parabéns! Você adivinhou a palavra!";
       document.getElementById("guess-button").disabled = true;
-
-      const modal = document.getElementById("modal");
-      modal.style.display = "block";
+      openFim();
 
       //createConfetti();
     } else {
@@ -288,6 +375,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const key = document.querySelector(`[data-key="${letter}"]`);
       key.style.backgroundColor = "green";
       key.style.color = "white";
+    });
+  }
+
+  function limparStyleKeys() {
+    const keys = document.querySelectorAll(".key");
+    keys.forEach((key) => {
+      key.style.backgroundColor = "";
+      key.style.color = "";
     });
   }
 
@@ -330,7 +425,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .toUpperCase();
   }
 
-  lerArquivoEPreencherArray();
   function salvaPontos() {
     const nome = document.getElementById("player-name").value.toUpperCase();
     const pontuacao = pontuacaoFinal;
@@ -359,4 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error(error);
       });
   }
+
+  initialize();
+  lerArquivoEPreencherArray(0);
 });
