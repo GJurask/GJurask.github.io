@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          console.log("Reprodução iniciada com sucesso");
         })
         .catch((error) => {
           console.error("Erro ao iniciar a reprodução:", error);
@@ -75,15 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      // Certifique-se de remover a classe mesmo em caso de erro
       const title = document.querySelector(".title");
-      title.innerHTML = title.textContent; // Isso remove as tags <span>
+      title.innerHTML = title.textContent;
     }
   }
 
   async function getPontuacoes() {
     try {
-      const response = await fetch(API + "pontuacoes");
+      const response = await fetch(`${API}pontuacoes/${wordToGuess.length}`);
 
       if (response.ok) {
         const scoreboardTable = document.getElementById("scoreboard");
@@ -131,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function startTimer() {
     playAudio(timerAudio);
-    console.log(timerInterval);
+    console.log(timerInterval)
     if (!timerInterval) {
       timerInterval = setInterval(function () {
         timer++;
@@ -181,8 +179,12 @@ document.addEventListener("DOMContentLoaded", function () {
     incorrectLetter = [];
     timer = 0;
     pontuacaoFinal = 2000;
-    document.getElementById("attempts-left").textContent = attemptsLeft;
 
+    document.getElementById("attempts-left").textContent = attemptsLeft;
+    document.getElementById("attempts-left-message").textContent = "Tentativas restantes: ";
+    document.getElementById("guess-button").disabled = false;
+
+    updateTimerDisplay();
     criaGridLetras();
     limparStyleKeys();
   }
@@ -226,7 +228,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setTimeout(function () {
       const nones = document.querySelectorAll(".display-none");
-
       nones.forEach((none) => {
         //none.classList.remove("display-none");
       });
@@ -360,6 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function stopTimer() {    
     timerAudio.pause();
     clearInterval(timerInterval);
+    timerInterval = undefined;
   }
 
   function checkGuess() {
@@ -374,7 +376,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const resultMessage = document.getElementById("attempts");
+    const resultMessage = document.getElementById("attempts-left-message");
     const wordDisplay = document.getElementById("word-display" + attemptsLeft);
     const letters = wordDisplay.querySelectorAll(".letter");
 
@@ -413,6 +415,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (attemptsLeft === 0) {
         stopTimer();
         playAudio(fAudio);
+        document.getElementById("attempts-left").textContent = ".";
         resultMessage.textContent = `Suas tentativas acabaram. A palavra era "${wordToGuess}".`;
         document.getElementById("guess-button").disabled = true;
       }
