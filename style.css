@@ -200,10 +200,16 @@ input {
 }
 
 #theme-toggle-container {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 999;
+}
+
+#dica-button{
+  margin-top: 78px;
 }
 
 @keyframes shake {
@@ -412,4 +418,48 @@ input {
 .red-font{
   color : red;
   font-weight : bold;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #ff8700;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-color: transparent transparent transparent #ff8700;
+
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-left {
+  top: -2px;
+  bottom: auto;
+  right: 115%;
 }

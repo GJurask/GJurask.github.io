@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let incorrectLetter = [];
   let timerInterval;
   let timer = 0;
+  let dicasDadas = 0;
   let pontuacaoFinal = 2000;
   const API = "https://seed-unexpected-rhythm.glitch.me/";
   const chaveSecreta = 5;
@@ -176,7 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
       posicoesInconrretasDistintas.size * 30 +
       corretasDistintas.size * 50;
 
-    pontuacaoFinal = pontuacaoBase + tentativasBonus - timer - letras;
+    pontuacaoFinal =
+      pontuacaoBase + tentativasBonus - timer - letras - dicasDadas * 500;
 
     const timerDisplay = document.getElementById("pontos");
     timerDisplay.textContent = pontuacaoFinal;
@@ -189,7 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       timerDisplay.classList.remove("red-font");
     }
-    
   }
 
   function formatTime(timeInSeconds) {
@@ -210,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
     incorrectLetter = [];
     timer = 0;
     pontuacaoFinal = 2000;
+    dicasDadas = 0;
 
     document.getElementById("guess-input").value = "";
     document.getElementById("attempts-left").textContent = attemptsLeft;
@@ -234,6 +236,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document
       .getElementById("config-toggle")
       .addEventListener("click", toggleConfig);
+
+    document.getElementById("dica-button").addEventListener("click", darDica);
 
     document
       .getElementById("save-score-button")
@@ -271,11 +275,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function criaGridLetras() {
     const preencher = document.getElementById("preencher");
     const espelho = document.getElementById("espelho-resposta");
-    
+
     while (preencher.firstChild) {
       preencher.removeChild(preencher.firstChild);
     }
-    if(espelho.firstChild){
+    if (espelho.firstChild) {
       espelho.removeChild(espelho.firstChild);
     }
 
@@ -334,6 +338,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     salvaPontos();
     closeFim();
+  }
+
+  function darDica() {
+    //remoer 500 ponto da pontuação
+    dicasDadas++;
+    console.log(dicasDadas);
   }
 
   function toggleConfig() {
