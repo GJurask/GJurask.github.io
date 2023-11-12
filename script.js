@@ -19,8 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (playPromise !== undefined) {
       playPromise
-        .then(() => {
-        })
+        .then(() => {})
         .catch((error) => {
           console.error("Erro ao iniciar a reprodução:", error);
         });
@@ -129,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function startTimer() {
     playAudio(timerAudio);
-    console.log(timerInterval)
+    console.log(timerInterval);
     if (!timerInterval) {
       timerInterval = setInterval(function () {
         timer++;
@@ -181,7 +180,8 @@ document.addEventListener("DOMContentLoaded", function () {
     pontuacaoFinal = 2000;
 
     document.getElementById("attempts-left").textContent = attemptsLeft;
-    document.getElementById("attempts-left-message").textContent = "Tentativas restantes: ";
+    document.getElementById("attempts-left-message").textContent =
+      "Tentativas restantes: ";
     document.getElementById("guess-button").disabled = false;
 
     updateTimerDisplay();
@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function stopTimer() {    
+  function stopTimer() {
     timerAudio.pause();
     clearInterval(timerInterval);
     timerInterval = undefined;
@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (correctCount === wordToGuess.length) {
-      stopTimer();      
+      stopTimer();
       playAudio(victoryAudio);
       document.getElementById("guess-button").disabled = true;
       openFim();
