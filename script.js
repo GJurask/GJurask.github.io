@@ -55,23 +55,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function decifraDeSubstituicao(palavraCriptografada) {
-    const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  
+    const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     const decifrarLetra = (letra, chaveSecreta) => {
       const indice = alfabeto.indexOf(letra);
       if (indice === -1) return letra;
-  
+
       let indiceDecifrado = (indice - chaveSecreta) % alfabeto.length;
       if (indiceDecifrado < 0) indiceDecifrado += alfabeto.length;
       return alfabeto[indiceDecifrado];
     };
-  
+
     const palavraDescriptografada = palavraCriptografada
       .toUpperCase()
-      .split('')
-      .map(letra => decifrarLetra(letra, chaveSecreta))
-      .join('');
-  
+      .split("")
+      .map((letra) => decifrarLetra(letra, chaveSecreta))
+      .join("");
+
     return palavraDescriptografada;
   }
 
@@ -189,6 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       timerDisplay.classList.remove("red-font");
     }
+    
   }
 
   function formatTime(timeInSeconds) {
@@ -269,22 +270,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function criaGridLetras() {
     const preencher = document.getElementById("preencher");
+    const espelho = document.getElementById("espelho-resposta");
+    
     while (preencher.firstChild) {
       preencher.removeChild(preencher.firstChild);
     }
-    for (let i = attemptsLeft; i > 0; i--) {
-      const wordDisplay = document.createElement("div");
-      wordDisplay.className = "word-display";
-      wordDisplay.id = "word-display" + i;
-
-      for (const letterToGuess of wordToGuess) {
-        const letter = document.createElement("div");
-        letter.className = "letter";
-        wordDisplay.appendChild(letter);
-      }
-      preencher.appendChild(wordDisplay);
+    if(espelho.firstChild){
+      espelho.removeChild(espelho.firstChild);
     }
+
+    for (let i = attemptsLeft; i > 0; i--) {
+      preencher.appendChild(criaLinha(i));
+    }
+    espelho.appendChild(criaLinha("espelho"));
   }
+
+  function criaLinha(n) {
+    const wordDisplay = document.createElement("div");
+    wordDisplay.className = "word-display";
+    wordDisplay.id = "word-display" + n;
+
+    for (const letterToGuess of wordToGuess) {
+      const letter = document.createElement("div");
+      letter.className = "letter";
+      wordDisplay.appendChild(letter);
+    }
+    return wordDisplay;
+  }
+
   /*
   function closeConfig() {
     const modalConfig = document.getElementById("modal-config");
@@ -413,12 +426,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const wordDisplay = document.getElementById("word-display" + attemptsLeft);
     const letters = wordDisplay.querySelectorAll(".letter");
 
+    const espelhoWordDisplay = document.getElementById("word-displayespelho");
+    const espelhoLetters = espelhoWordDisplay.querySelectorAll(".letter");
+
     let correctCount = 0;
 
     for (let i = 0; i < wordToGuess.length; i++) {
       letters[i].textContent = guess[i];
       if (normalizedGuess[i] === removerAcentos(wordToGuess[i])) {
         letters[i].style.backgroundColor = "green";
+        espelhoLetters[i].style.backgroundColor = "green";
+        espelhoLetters[i].textContent = guess[i];
         correctLetters.push(normalizedGuess[i]);
         correctCount++;
       } else if (removerAcentos(wordToGuess).includes(normalizedGuess[i])) {
@@ -449,7 +467,13 @@ document.addEventListener("DOMContentLoaded", function () {
         stopTimer();
         playAudio(fAudio);
         document.getElementById("attempts-left").textContent = ".";
-        resultMessage.textContent = `Suas tentativas acabaram. A palavra era "${wordToGuess}".`;
+        resultMessage.textContent = `Suas tentativas acabaram. F`;
+
+        for (let i = 0; i < wordToGuess.length; i++) {
+          espelhoLetters[i].textContent = wordToGuess[i];
+          if (espelhoLetters[i].style.backgroundColor != "green")
+            espelhoLetters[i].style.backgroundColor = "red";
+        }
         document.getElementById("guess-button").disabled = true;
       }
     }
