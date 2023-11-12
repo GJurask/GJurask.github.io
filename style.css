@@ -1,25 +1,34 @@
+:root {
+  --primary-bg-color: #fff;
+  --primary-text-color: #333;
+  --secondary-bg-color: #444;
+  --secondary-text-color: #fff;
+  --accent-color: #f7f603;
+  --button-bg-color: #007bff;
+}
+
 body {
   text-align: center;
   font-family: Arial, sans-serif;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
 
   transition: background-color 1s, color 1s;
 }
 
 body.dark-theme {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--primary-text-color);
+  color: var(--secondary-text-color);
 
   .letter {
     background-color: #555;
     border: 1px solid #777;
   }
-
+/*  */
   .wordle-container {
     margin-top: 20px;
-    color: #fff;
-    background-color: #444;
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-bg-color);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -31,13 +40,13 @@ body.dark-theme {
     margin: 10px;
     text-transform: uppercase;
     background-color: #555;
-    color: #fff;
+    color: var(--secondary-text-color);
     border: 1px solid #777;
   }
 
   .button {
     padding: 10px 20px;
-    background-color: #f7f603;
+    background-color: var(--accent-color);
     color: #000;
     border: none;
     cursor: pointer;
@@ -49,11 +58,11 @@ body.dark-theme {
   }
 
   #scoreboard th {
-    color: #fff;
+    color: var(--secondary-text-color);
   }
   #scoreboard {
     background-color: #315;
-    color: #fff;
+    color: var(--secondary-text-color);
   }
 
   #scoreboard thead {
@@ -61,17 +70,17 @@ body.dark-theme {
   }
 
   #scoreboard tbody tr:nth-child(even) {
-    background-color: #444;
+    background-color: var(--secondary-bg-color);
   }
 
   #scoreboard tbody tr:nth-child(odd) {
-    background-color: #333;
+    background-color: var(--primary-text-color);
   }
 }
 
 .wordle-container {
   margin-top: 20px;
-  background-color: #fff;
+  background-color: var(--primary-bg-color);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -106,16 +115,16 @@ input {
   padding: 10px;
   margin: 10px;
   text-transform: uppercase;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
   border: 1px solid #000;
   transition: background-color 1s, color 1s;
 }
 
 .button {
   padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--button-bg-color);
+  color: var(--secondary-text-color);
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -139,7 +148,7 @@ input {
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(231, 76, 60, 0.9);
-  color: #fff;
+  color: var(--secondary-text-color);
   padding: 10px;
   border-radius: 5px;
   z-index: 999;
@@ -260,7 +269,7 @@ input {
   border-collapse: collapse;
   width: 100%;
   background-color: #d7d7d7;
-  color: #333;
+  color: var(--primary-text-color);
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -281,7 +290,7 @@ input {
 }
 
 #scoreboard tbody tr:nth-child(odd) {
-  background-color: #fff;
+  background-color: var(--primary-bg-color);
 }
 
 .scoreboard-container {
@@ -307,7 +316,7 @@ input {
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: var(--primary-bg-color);
   margin: 20% auto;
   padding: 20px;
   border-radius: 10px;
@@ -361,7 +370,6 @@ input {
 }
 
 .config-buttons {
-  max-width: 900px;
   display: flex !important;
   justify-content: center;
   flex-wrap: wrap;
@@ -373,6 +381,30 @@ input {
   }
 }
 
+.title-div {
+  display: flex !important;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .display-none{
   /* display: none !important; */
+}
+
+.title {
+  display: inline-block;
+}
+
+.title-letter {
+  display: inline-block;
+  animation: jump 0.5s infinite alternate;
+}
+
+@keyframes jump {
+  to {
+    transform: translateY(-10px);
+  }
+}
+.transparente{
+  color:rgba(0, 0, 0, 0)
 }

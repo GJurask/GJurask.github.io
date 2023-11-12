@@ -8,14 +8,64 @@ document.addEventListener("DOMContentLoaded", function () {
   let timerInterval;
   let timer = 0;
   let pontuacaoFinal = 2000;
-
   const API = "https://seed-unexpected-rhythm.glitch.me/";
+
+  const timerAudio = document.getElementById("timerAudio");
+  const victoryAudio = document.getElementById("victoryAudio");
+  const fAudio = document.getElementById("fAudio");
+
+  function playAudio(audioElement) {
+    const playPromise = audioElement.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log("Reprodução iniciada com sucesso");
+        })
+        .catch((error) => {
+          console.error("Erro ao iniciar a reprodução:", error);
+        });
+    }
+  }
+
+  let gotResponse = false;
+  function animateTitleLetters() {
+    const title = document.querySelector(".title");
+    const letters = title.textContent.split("");
+    title.innerHTML = "";
+
+    let index = 0;
+
+    const intervalId = setInterval(function () {
+      if (index < letters.length) {
+        const span = document.createElement("span");
+        span.textContent = letters[index];
+        span.classList.add("bounce");
+        title.appendChild(span);
+        index++;
+      } else {
+        clearInterval(intervalId);
+
+        if (!gotResponse) {
+          setTimeout(function () {
+            animateTitleLetters();
+          }, 500);
+        }
+      }
+    }, 100);
+  }
 
   async function lerArquivoEPreencherArray(size) {
     try {
+      animateTitleLetters();
+
       const response = await fetch(API + `palavra/${size}`);
 
+      gotResponse = true;
       if (response.ok) {
+        const title = document.querySelector(".title");
+        title.innerHTML = title.textContent;
+
         const output = await response.json();
         wordToGuess = output.palavra.trim();
 
@@ -24,6 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      // Certifique-se de remover a classe mesmo em caso de erro
+      const title = document.querySelector(".title");
+      title.innerHTML = title.textContent; // Isso remove as tags <span>
     }
   }
 
@@ -76,10 +130,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function startTimer() {
-    timerInterval = setInterval(function () {
-      timer++;
-      updateTimerDisplay();
-    }, 1000);
+    playAudio(timerAudio);
+    console.log(timerInterval);
+    if (!timerInterval) {
+      timerInterval = setInterval(function () {
+        timer++;
+        updateTimerDisplay();
+      }, 1000);
+    }
   }
 
   function updateTimerDisplay() {
@@ -114,7 +172,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeGame() {
-    startTimer();
     const guessInput = document.getElementById("guess-input");
     guessInput.maxLength = wordToGuess.length;
 
@@ -300,11 +357,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function stopTimer() {
+  function stopTimer() {    
+    timerAudio.pause();
     clearInterval(timerInterval);
   }
 
   function checkGuess() {
+    startTimer();
+
     const guessInput = document.getElementById("guess-input");
     const guess = guessInput.value.toUpperCase();
     const normalizedGuess = removerAcentos(guess);
@@ -336,7 +396,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (correctCount === wordToGuess.length) {
-      stopTimer();
+      stopTimer();      
+      playAudio(victoryAudio);
       document.getElementById("guess-button").disabled = true;
       openFim();
 
@@ -351,6 +412,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("attempts-left").textContent = attemptsLeft;
       if (attemptsLeft === 0) {
         stopTimer();
+        playAudio(fAudio);
         resultMessage.textContent = `Suas tentativas acabaram. A palavra era "${wordToGuess}".`;
         document.getElementById("guess-button").disabled = true;
       }

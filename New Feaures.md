@@ -1,3 +1,7 @@
+bug do tempo, set interval direto.
+
+tela de loading esperando carregas, letras pulandos?
+
 verificar botão diasbled.
 
 ATUALIZAR A PONTUAÇÃO E MTEMPO REAL

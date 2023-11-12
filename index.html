@@ -8,7 +8,24 @@
     />
   </head>
   <body class="dark-theme">
-    <h1>Jurask Wordle</h1>
+    <audio id="timerAudio" loop>
+      <source src="timer.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="victoryAudio">
+      <source src="victory.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="fAudio">
+      <source src="f.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <div class="title-div">
+      <h1 class="transparente">|</h1>
+      <h1 class="title">Jurask Wordle...</h1>
+    </div>
     <div class="timer">
       <strong>Tempo: </strong>
       <p id="timer">00:00</p>
@@ -20,7 +37,7 @@
 
     <div id="confetti-container"></div>
     <div id="theme-toggle-container">
-      <button class="button" id="config-toggle" >Configs</button>
+      <button class="button" id="config-toggle">Configs</button>
     </div>
 
     <div class="wordle-container">
@@ -103,7 +120,9 @@
           <button class="button button-change-game" id="init-game-7">7</button>
           <button class="button button-change-game" id="init-game-8">8</button>
           <button class="button button-change-game" id="init-game-9">9</button>
-          <button class="button button-change-game" id="theme-toggle">Alternar Tema</button>
+          <button class="button button-change-game" id="theme-toggle">
+            Alternar Tema
+          </button>
         </div>
       </div>
     </div>
