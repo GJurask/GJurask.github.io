@@ -408,3 +408,8 @@ input {
 .transparente{
   color:rgba(0, 0, 0, 0)
 }
+
+.red-font{
+  color : red;
+  font-weight : bold;
+}

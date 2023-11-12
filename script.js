@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let timer = 0;
   let pontuacaoFinal = 2000;
   const API = "https://seed-unexpected-rhythm.glitch.me/";
+  const chaveSecreta = 5;
 
   const timerAudio = document.getElementById("timerAudio");
   const victoryAudio = document.getElementById("victoryAudio");
@@ -53,6 +54,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 100);
   }
 
+  function decifraDeSubstituicao(palavraCriptografada) {
+    const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  
+    const decifrarLetra = (letra, chaveSecreta) => {
+      const indice = alfabeto.indexOf(letra);
+      if (indice === -1) return letra;
+  
+      let indiceDecifrado = (indice - chaveSecreta) % alfabeto.length;
+      if (indiceDecifrado < 0) indiceDecifrado += alfabeto.length;
+      return alfabeto[indiceDecifrado];
+    };
+  
+    const palavraDescriptografada = palavraCriptografada
+      .toUpperCase()
+      .split('')
+      .map(letra => decifrarLetra(letra, chaveSecreta))
+      .join('');
+  
+    return palavraDescriptografada;
+  }
+
   async function lerArquivoEPreencherArray(size) {
     try {
       animateTitleLetters();
@@ -65,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title.innerHTML = title.textContent;
 
         const output = await response.json();
-        wordToGuess = output.palavra.trim();
+        wordToGuess = decifraDeSubstituicao(output.palavra.trim());
 
         getPontuacoes();
         initializeGame();
@@ -158,6 +180,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const timerDisplay = document.getElementById("pontos");
     timerDisplay.textContent = pontuacaoFinal;
+
+    if (pontuacaoFinal <= 500 && !timerDisplay.classList.contains("red-font")) {
+      timerDisplay.classList.add("red-font");
+    } else if (
+      pontuacaoFinal > 500 &&
+      timerDisplay.classList.contains("red-font")
+    ) {
+      timerDisplay.classList.remove("red-font");
+    }
   }
 
   function formatTime(timeInSeconds) {
@@ -179,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
     timer = 0;
     pontuacaoFinal = 2000;
 
+    document.getElementById("guess-input").value = "";
     document.getElementById("attempts-left").textContent = attemptsLeft;
     document.getElementById("attempts-left-message").textContent =
       "Tentativas restantes: ";
@@ -220,6 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const size = parseInt(button.textContent);
 
         if (!isNaN(size)) {
+          stopTimer();
           lerArquivoEPreencherArray(size);
           closeConfig();
         }

@@ -1,15 +1,5 @@
-bug do tempo, set interval direto.
-
-tela de loading esperando carregas, letras pulandos?
-
-verificar botão diasbled.
-
 ATUALIZAR A PONTUAÇÃO E MTEMPO REAL
-
-colocar o timer em vermelho de 100 em 100 dps do 500
-barulho da bomba.
-
-criptogrfar o input que vem do back.
+depois de um tempo fazer com que o timer pause
 
 cores já utilizadas mais escuras
 
