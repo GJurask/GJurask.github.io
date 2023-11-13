@@ -207,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeGame() {
+    wordToGuess = "CABEÇALHO"
     const guessInput = document.getElementById("guess-input");
     guessInput.maxLength = wordToGuess.length;
 
@@ -223,10 +224,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("attempts-left-message").textContent =
       "Tentativas restantes: ";
     document.getElementById("guess-button").disabled = false;
-    
-    custoDica = Math.floor(PONTUACAO_MAXIMA / (wordToGuess.length - 1));
-    document.getElementById("custo-dica").textContent = `Você perde ${custoDica} pontos por dica!`;
 
+    custoDica = Math.floor(PONTUACAO_MAXIMA / (wordToGuess.length - 1));
+    document.getElementById(
+      "custo-dica"
+    ).textContent = `Você perde ${custoDica} pontos por dica!`;
 
     updateTimerDisplay();
     criaGridLetras();
@@ -359,6 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (espelhoLetras[j].textContent === "") {
         espelhoLetras[j].textContent = wordToGuess[j];
         espelhoLetras[j].style.backgroundColor = "green";
+        correctLetters.push(wordToGuess[j]);
         startTimer();
         dicasDadas++;
         pintaTeclado();
@@ -471,6 +474,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const espelhoWordDisplay = document.getElementById("word-displayespelho");
     const espelhoLetters = espelhoWordDisplay.querySelectorAll(".letter");
 
+    let copiaWordToGuess = removerAcentos(wordToGuess).split('');;
+
     let correctCount = 0;
 
     for (let i = 0; i < wordToGuess.length; i++) {
@@ -481,9 +486,16 @@ document.addEventListener("DOMContentLoaded", function () {
         espelhoLetters[i].textContent = guess[i];
         correctLetters.push(normalizedGuess[i]);
         correctCount++;
-      } else if (removerAcentos(wordToGuess).includes(normalizedGuess[i])) {
+        copiaWordToGuess[i] = "_";
+      }
+    }
+
+    for (let i = 0; i < wordToGuess.length; i++) {
+      if (normalizedGuess[i] === removerAcentos(wordToGuess[i])) {
+      } else if (copiaWordToGuess.join('').includes(normalizedGuess[i])) {
         letters[i].style.backgroundColor = "#f7f603";
         incorrectPositions.push(normalizedGuess[i]);
+        copiaWordToGuess[copiaWordToGuess.indexOf(normalizedGuess[i])] = "_";
       } else {
         letters[i].style.backgroundColor = "lightgray";
         incorrectLetter.push(normalizedGuess[i]);
@@ -606,7 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
       palavra,
       data,
       time,
-      dicas
+      dicas,
     };
     fetch(API + "salvarPontuacao", {
       method: "POST",
