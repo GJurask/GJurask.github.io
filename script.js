@@ -207,7 +207,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeGame() {
-    wordToGuess = "CABEÇALHO"
     const guessInput = document.getElementById("guess-input");
     guessInput.maxLength = wordToGuess.length;
 
