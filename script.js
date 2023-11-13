@@ -8,7 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let timerInterval;
   let timer = 0;
   let dicasDadas = 0;
-  let pontuacaoFinal = 2000;
+  const PONTUACAO_MAXIMA = 2000;
+  let pontuacaoFinal = PONTUACAO_MAXIMA;
+  let custoDica = 0;
   const API = "https://seed-unexpected-rhythm.glitch.me/";
   const chaveSecreta = 5;
 
@@ -121,17 +123,20 @@ document.addEventListener("DOMContentLoaded", function () {
           const playerWordCell = document.createElement("td");
           const playerDataCell = document.createElement("td");
           const playerTimeCell = document.createElement("td");
+          const playerDicasCell = document.createElement("td");
 
           playerNameCell.textContent = score.nome;
           playerScoreCell.textContent = score.pontuacao;
           playerWordCell.textContent = score.palavra;
           playerDataCell.textContent = score.data;
           playerTimeCell.textContent = score.time;
+          playerDicasCell.textContent = score.dicas ? score.dicas : 0;
 
           row.appendChild(playerNameCell);
           row.appendChild(playerScoreCell);
           row.appendChild(playerWordCell);
           row.appendChild(playerTimeCell);
+          row.appendChild(playerDicasCell);
           row.appendChild(playerDataCell);
 
           scoreboardBody.appendChild(row);
@@ -151,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function startTimer() {
     playAudio(timerAudio);
-    console.log(timerInterval);
+
     if (!timerInterval) {
       timerInterval = setInterval(function () {
         timer++;
@@ -178,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
       corretasDistintas.size * 50;
 
     pontuacaoFinal =
-      pontuacaoBase + tentativasBonus - timer - letras - dicasDadas * 500;
+      pontuacaoBase + tentativasBonus - timer - letras - dicasDadas * custoDica;
 
     const timerDisplay = document.getElementById("pontos");
     timerDisplay.textContent = pontuacaoFinal;
@@ -210,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
     incorrectPositions = [];
     incorrectLetter = [];
     timer = 0;
-    pontuacaoFinal = 2000;
+    pontuacaoFinal = PONTUACAO_MAXIMA;
     dicasDadas = 0;
 
     document.getElementById("guess-input").value = "";
@@ -218,6 +223,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("attempts-left-message").textContent =
       "Tentativas restantes: ";
     document.getElementById("guess-button").disabled = false;
+    
+    custoDica = Math.floor(PONTUACAO_MAXIMA / (wordToGuess.length - 1));
+    document.getElementById("custo-dica").textContent = `Você perde ${custoDica} pontos por dica!`;
+
 
     updateTimerDisplay();
     criaGridLetras();
@@ -341,9 +350,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function darDica() {
-    //remoer 500 ponto da pontuação
-    dicasDadas++;
-    console.log(dicasDadas);
+    let respelhoResposta = document.getElementById("espelho-resposta");
+    const espelhoLetras = respelhoResposta.querySelectorAll(".letter");
+    const posicoes = arrayPosicoesAleatorias(wordToGuess.length);
+
+    for (let i = espelhoLetras.length - 1; i >= 0; i--) {
+      const j = posicoes[i];
+      if (espelhoLetras[j].textContent === "") {
+        espelhoLetras[j].textContent = wordToGuess[j];
+        espelhoLetras[j].style.backgroundColor = "green";
+        startTimer();
+        dicasDadas++;
+        pintaTeclado();
+        break;
+      }
+    }
+  }
+
+  function arrayPosicoesAleatorias(tamanho) {
+    let arrayBase = Array.from({ length: tamanho }, (_, index) => index);
+
+    for (let i = arrayBase.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arrayBase[i], arrayBase[j]] = [arrayBase[j], arrayBase[i]];
+    }
+
+    return arrayBase;
   }
 
   function toggleConfig() {
@@ -491,6 +523,10 @@ document.addEventListener("DOMContentLoaded", function () {
     guessInput.value = "";
     guessInput.focus();
 
+    pintaTeclado();
+  }
+
+  function pintaTeclado() {
     incorrectLetter.forEach((letter) => {
       const key = document.querySelector(`[data-key="${letter}"]`);
       key.style.backgroundColor = "black";
@@ -561,6 +597,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const nome = document.getElementById("player-name").value.toUpperCase();
     const pontuacao = pontuacaoFinal;
     const palavra = wordToGuess;
+    const dicas = dicasDadas;
     const data = new Date().toLocaleDateString("pt-BR");
     const time = formatTime(timer);
     const novaPontuacao = {
@@ -569,6 +606,7 @@ document.addEventListener("DOMContentLoaded", function () {
       palavra,
       data,
       time,
+      dicas
     };
     fetch(API + "salvarPontuacao", {
       method: "POST",
