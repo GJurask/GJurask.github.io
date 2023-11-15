@@ -1,3 +1,6 @@
+coloccar qtde de tentativas no placar
+
+
 depois de um tempo fazer com que o timer pause
 
 cores já utilizadas mais escuras

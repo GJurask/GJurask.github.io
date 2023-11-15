@@ -1,5 +1,5 @@
 import { lerArquivoEPreencherArray } from "./fetchData.mjs";
-import { checkGuess, provideHint, stopTimer, updateScore } from "./gameLogic.mjs";
+import { changeSubject, checkGuess, provideHint, stopTimer, updateScore } from "./gameLogic.mjs";
 import { handleLetterGuessInput } from "./keyboard.mjs";
 import { gameData } from "./main.mjs";
 import { savePlayerScore } from "./score.mjs";
@@ -150,11 +150,15 @@ export function initUI() {
     .getElementById("close-button-fim")
     .addEventListener("click", closeFim);
 
-  document
+    document
     .getElementById("close-button-config")
     .addEventListener("click", closeConfig);
 
-  const buttons = document.querySelectorAll(".button-change-game");
+    document
+    .getElementById("change-theme-game")
+    .addEventListener("click", changeSubject);
+
+  const buttons = document.querySelectorAll(".change-size-game");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       const size = parseInt(button.textContent);

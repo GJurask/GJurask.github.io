@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   }
-  
+
   function initiateGame() {
     const guessInput = document.getElementById("guess-input");
     guessInput.maxLength = wordToGuess.length;
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .getElementById("close-button-config")
       .addEventListener("click", closeConfig);
 
-    const buttons = document.querySelectorAll(".button-change-game");
+    const buttons = document.querySelectorAll(".change-size-game");
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         const size = parseInt(button.textContent);

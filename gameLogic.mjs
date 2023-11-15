@@ -105,6 +105,10 @@ export function stopTimer() {
   timerInterval = undefined;
 }
 
+export function changeSubject(subject){
+  
+}
+
 export function checkGuess() {
   startTimer();
 
