@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   let gotResponse = false;
+  
   function animateTitleLetters() {
     const title = document.querySelector(".title");
     const letters = title.textContent.split("");
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }, 100);
   }
+  
 
   function decifraDeSubstituicao(palavraCriptografada) {
     const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -93,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
         wordToGuess = decifraDeSubstituicao(output.palavra.trim());
 
         getPontuacoes();
-        initializeGame();
+        initiateGame();
       }
     } catch (error) {
       console.error("Error:", error);
@@ -102,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       title.innerHTML = title.textContent;
     }
   }
+
 
   async function getPontuacoes() {
     try {
@@ -165,13 +168,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+
   function updateTimerDisplay() {
     const timerDisplay = document.getElementById("timer");
     timerDisplay.textContent = formatTime(timer);
-    atualizarPontuacao();
+    updateScore();
   }
+  
 
-  function atualizarPontuacao() {
+  function updateScore() {
     const pontuacaoBase = 1400;
     const tentativasBonus = attemptsLeft * 100;
 
@@ -198,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+
   function formatTime(timeInSeconds) {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -205,8 +211,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   }
-
-  function initializeGame() {
+  
+  function initiateGame() {
     const guessInput = document.getElementById("guess-input");
     guessInput.maxLength = wordToGuess.length;
 
@@ -230,28 +236,28 @@ document.addEventListener("DOMContentLoaded", function () {
     ).textContent = `Você perde ${custoDica} pontos por dica!`;
 
     updateTimerDisplay();
-    criaGridLetras();
-    limparStyleKeys();
+    createLetterGrid();
+    clearKeyStyles();
   }
 
-  function initialize() {
+  function initUI() {
     document
       .getElementById("guess-button")
       .addEventListener("click", checkGuess);
 
     document
       .getElementById("theme-toggle")
-      .addEventListener("click", toggleTheme);
+      .addEventListener("click", toggleThemeMode);
 
     document
       .getElementById("config-toggle")
-      .addEventListener("click", toggleConfig);
+      .addEventListener("click", toggleConfigModal);
 
-    document.getElementById("dica-button").addEventListener("click", darDica);
+    document.getElementById("dica-button").addEventListener("click", provideHint);
 
     document
       .getElementById("save-score-button")
-      .addEventListener("click", saveScore);
+      .addEventListener("click", savePlayerScore);
 
     document
       .getElementById("close-button-fim")
@@ -282,7 +288,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 2000);
   }
 
-  function criaGridLetras() {
+
+  function createLetterGrid() {
     const preencher = document.getElementById("preencher");
     const espelho = document.getElementById("espelho-resposta");
 
@@ -294,12 +301,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     for (let i = attemptsLeft; i > 0; i--) {
-      preencher.appendChild(criaLinha(i));
+      preencher.appendChild(createRow(i));
     }
-    espelho.appendChild(criaLinha("espelho"));
+    espelho.appendChild(createRow("espelho"));
   }
 
-  function criaLinha(n) {
+
+  function createRow(n) {
     const wordDisplay = document.createElement("div");
     wordDisplay.className = "word-display";
     wordDisplay.id = "word-display" + n;
@@ -312,17 +320,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return wordDisplay;
   }
 
-  /*
-  function closeConfig() {
-    const modalConfig = document.getElementById("modal-config");
-    modalConfig.style.display = "none";
-  }
+            /*
+            function closeConfig() {
+              const modalConfig = document.getElementById("modal-config");
+              modalConfig.style.display = "none";
+            }
 
-  function closeFim() {
-    const modalFim = document.getElementById("modal-fim");
-    modalFim.style.display = "none";
-  }
-*/
+            function closeFim() {
+              const modalFim = document.getElementById("modal-fim");
+              modalFim.style.display = "none";
+            }
+          */
+         
   function closeConfig() {
     const modalConfig = document.getElementById("modal-config");
     modalConfig.classList.add("hide");
@@ -333,24 +342,26 @@ document.addEventListener("DOMContentLoaded", function () {
     modalFim.classList.add("hide");
   }
 
-  function openFim() {
+  function openEndScreen() {
     const modalFim = document.getElementById("modal-fim");
     modalFim.classList.remove("hide");
     modalFim.classList.add("show");
   }
 
-  function saveScore() {
+
+  function savePlayerScore() {
     const playerName = document.getElementById("player-name").value;
     if (playerName.trim() === "") {
       showToast("Digite seu nome para salvar a pontuação.");
       return;
     }
 
-    salvaPontos();
+    savePoints();
     closeFim();
   }
+  
 
-  function darDica() {
+  function provideHint() {
     let respelhoResposta = document.getElementById("espelho-resposta");
     const espelhoLetras = respelhoResposta.querySelectorAll(".letter");
     const posicoes = arrayPosicoesAleatorias(wordToGuess.length);
@@ -363,11 +374,12 @@ document.addEventListener("DOMContentLoaded", function () {
         correctLetters.push(wordToGuess[j]);
         startTimer();
         dicasDadas++;
-        pintaTeclado();
+        highlightKeyboardKeys();
         break;
       }
     }
   }
+  
 
   function arrayPosicoesAleatorias(tamanho) {
     let arrayBase = Array.from({ length: tamanho }, (_, index) => index);
@@ -380,7 +392,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return arrayBase;
   }
 
-  function toggleConfig() {
+
+  function toggleConfigModal() {
     const modalConfig = document.getElementById("modal-config");
     if (modalConfig.classList.contains("hide")) {
       modalConfig.classList.remove("hide");
@@ -392,17 +405,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*
-  function toggleConfig() {
-    const modal = document.getElementById("modal-config");
-    if (modal.style.display == "block") {
-      modal.style.display = "none";
-    } else {
-      modal.style.display = "block";
-    }
-  }
-
+        function toggleConfigModal() {
+          const modal = document.getElementById("modal-config");
+          if (modal.style.display == "block") {
+            modal.style.display = "none";
+          } else {
+            modal.style.display = "block";
+          }
+        }
 */
-  function toggleTheme() {
+
+
+  function toggleThemeMode() {
     const body = document.body;
     if (body.classList.contains("dark-theme")) {
       body.classList.remove("dark-theme");
@@ -410,6 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
       body.classList.add("dark-theme");
     }
   }
+  
 
   function showToast(message) {
     const toast = document.getElementById("toast");
@@ -421,13 +436,6 @@ document.addEventListener("DOMContentLoaded", function () {
       toast.classList.remove("active");
     }, 4000);
   }
-
-  const guessInput = document.getElementById("guess-input");
-  guessInput.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-      checkGuess();
-    }
-  });
 
   const playerNameInput = document.getElementById("player-name");
   playerNameInput.addEventListener("keyup", function (event) {
@@ -448,6 +456,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+
   function stopTimer() {
     timerAudio.pause();
     clearInterval(timerInterval);
@@ -459,7 +468,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const guessInput = document.getElementById("guess-input");
     const guess = guessInput.value.toUpperCase();
-    const normalizedGuess = removerAcentos(guess);
+    const normalizedGuess = removeAccents(guess);
 
     if (guess.length !== wordToGuess.length) {
       showToast("Não sabe contar? Nem falo nada");
@@ -473,13 +482,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const espelhoWordDisplay = document.getElementById("word-displayespelho");
     const espelhoLetters = espelhoWordDisplay.querySelectorAll(".letter");
 
-    let copiaWordToGuess = removerAcentos(wordToGuess).split('');;
+    let copiaWordToGuess = removeAccents(wordToGuess).split('');;
 
     let correctCount = 0;
 
     for (let i = 0; i < wordToGuess.length; i++) {
       letters[i].textContent = guess[i];
-      if (normalizedGuess[i] === removerAcentos(wordToGuess[i])) {
+      if (normalizedGuess[i] === removeAccents(wordToGuess[i])) {
         letters[i].style.backgroundColor = "green";
         espelhoLetters[i].style.backgroundColor = "green";
         espelhoLetters[i].textContent = guess[i];
@@ -490,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     for (let i = 0; i < wordToGuess.length; i++) {
-      if (normalizedGuess[i] === removerAcentos(wordToGuess[i])) {
+      if (normalizedGuess[i] === removeAccents(wordToGuess[i])) {
       } else if (copiaWordToGuess.join('').includes(normalizedGuess[i])) {
         letters[i].style.backgroundColor = "#f7f603";
         incorrectPositions.push(normalizedGuess[i]);
@@ -505,7 +514,7 @@ document.addEventListener("DOMContentLoaded", function () {
       stopTimer();
       playAudio(victoryAudio);
       document.getElementById("guess-button").disabled = true;
-      openFim();
+      openEndScreen();
 
       //createConfetti();
     } else {
@@ -534,10 +543,11 @@ document.addEventListener("DOMContentLoaded", function () {
     guessInput.value = "";
     guessInput.focus();
 
-    pintaTeclado();
+    highlightKeyboardKeys();
   }
+  
 
-  function pintaTeclado() {
+  function highlightKeyboardKeys() {
     incorrectLetter.forEach((letter) => {
       const key = document.querySelector(`[data-key="${letter}"]`);
       key.style.backgroundColor = "black";
@@ -557,7 +567,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function limparStyleKeys() {
+
+  function clearKeyStyles() {
     const keys = document.querySelectorAll(".key");
     keys.forEach((key) => {
       key.style.backgroundColor = "";
@@ -580,31 +591,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  const keyboardKeys = document.querySelectorAll(".key");
-  keyboardKeys.forEach((key) => {
-    key.addEventListener("click", () => {
-      const letter = key.getAttribute("data-key");
-      const firstRow = document.querySelector(".word-display");
-      const firstRowInputs = firstRow.querySelectorAll(".letter");
-
-      for (const input of firstRowInputs) {
-        if (input.value === "") {
-          input.value = letter;
-          key.style.backgroundColor = "gray";
-          break;
-        }
-      }
-    });
-  });
-
-  function removerAcentos(texto) {
+  function removeAccents(texto) {
     return texto
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toUpperCase();
   }
 
-  function salvaPontos() {
+
+  function savePoints() {
     const nome = document.getElementById("player-name").value.toUpperCase();
     const pontuacao = pontuacaoFinal;
     const palavra = wordToGuess;
@@ -635,6 +630,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  initialize();
+  initUI();
   lerArquivoEPreencherArray(0);
 });
