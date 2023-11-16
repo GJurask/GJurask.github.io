@@ -1,3 +1,5 @@
+colocar dica que bsuca no dicionário
+
 melhorar o loading qndo clica em escolher por letras.
 CRIAR SKELOTON de loading.
 
