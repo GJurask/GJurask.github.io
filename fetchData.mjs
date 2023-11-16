@@ -2,12 +2,18 @@ import { animateTitleLetters } from "./animation.mjs";
 import { decifraDeSubstituicao } from "./decipher.mjs";
 import { initiateGame } from "./gameLogic.mjs";
 import { gameData, API } from "./main.mjs";
+import { loadingLayer } from "./ui.mjs";
 
 export async function lerArquivoEPreencherArray(size) {
   try {
+    loadingLayer(true);
     animateTitleLetters();
-
-    const response = await fetch(API + `palavra/${size}`);
+    let response = "";
+    if (gameData.subject == "dev")
+      response = await fetch(API + `palavra/${size}`);
+    else if (gameData.subject == "all") {
+      response = await fetch(API + `palavraAleatoria/${size}`);
+    }
 
     gameData.gotResponse = true;
     if (response.ok) {
@@ -23,15 +29,17 @@ export async function lerArquivoEPreencherArray(size) {
   } catch (error) {
     console.error("Error:", error);
   } finally {
+    loadingLayer(false);
     const title = document.querySelector(".title");
     title.innerHTML = title.textContent;
   }
 }
 
-
 export async function getPontuacoes() {
   try {
-    const response = await fetch(`${API}pontuacoes/${gameData.wordToGuess.length}`);
+    const response = await fetch(
+      `${API}pontuacoes/${gameData.wordToGuess.length}`
+    );
 
     if (response.ok) {
       const scoreboardTable = document.getElementById("scoreboard");

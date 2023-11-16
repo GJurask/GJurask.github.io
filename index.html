@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="loading.css" />
     <!--  <link
       rel="stylesheet"
       href="https://cdn.mjsdelivr.net/npm/toastify@1.0.12/dist/toastify.min.css"
@@ -114,6 +115,26 @@
       </div>
     </div>
 
+    <div id="loading-layer" class="modal hide display-none">
+      <h1>
+        <span class="let1">g</span>
+        <span class="let2">e</span>
+        <span class="let3">r</span>
+        <span class="let4">a</span>
+        <span class="let5">n</span>
+        <span class="let6">d</span>
+        <span class="let7">o</span>
+      </h1>
+      <h1>
+        <span class="let7">P</span>
+        <span class="let6">A</span>
+        <span class="let5">L</span>
+        <span class="let4">A</span>
+        <span class="let3">V</span>
+        <span class="let2">R</span>
+        <span class="let1">A</span>
+      </h1>
+    </div>
     <div id="modal-config" class="modal hide display-none">
       <div class="modal-content">
         <span class="close-button" id="close-button-config">&times;</span>
@@ -122,12 +143,11 @@
         </div>
         <div class="config-buttons">
           <p id="config-message">Assunto:</p>
-          <button class="button change-theme-game" id="dev">Dev</button>
-          <button class="button change-theme-game" id="all">De tudo!</button>
+          <button class="button change-subject-game" id="dev">Dev</button>
+          <button class="button change-subject-game" id="all">De tudo!</button>
         </div>
         <div class="config-buttons">
           <p id="config-message">Quantidade de letras:</p>
-          <span class="close-button" id="close-button-config">&times;</span>
           <button class="button change-size-game" id="init-game-4">4</button>
           <button class="button change-size-game" id="init-game-5">5</button>
           <button class="button change-size-game" id="init-game-6">6</button>

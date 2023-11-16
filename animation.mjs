@@ -22,6 +22,8 @@ export function animateTitleLetters() {
           animateTitleLetters();
         }, 500);
       }
+
+      gameData.gotResponse = false
     }
   }, 100);
 }

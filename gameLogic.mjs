@@ -106,7 +106,7 @@ export function stopTimer() {
 }
 
 export function changeSubject(subject){
-  
+  gameData.subject = subject;
 }
 
 export function checkGuess() {

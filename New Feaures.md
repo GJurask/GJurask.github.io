@@ -1,3 +1,6 @@
+melhorar o loading qndo clica em escolher por letras.
+CRIAR SKELOTON de loading.
+
 coloccar qtde de tentativas no placar
 
 

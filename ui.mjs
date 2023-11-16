@@ -1,5 +1,11 @@
 import { lerArquivoEPreencherArray } from "./fetchData.mjs";
-import { changeSubject, checkGuess, provideHint, stopTimer, updateScore } from "./gameLogic.mjs";
+import {
+  changeSubject,
+  checkGuess,
+  provideHint,
+  stopTimer,
+  updateScore,
+} from "./gameLogic.mjs";
 import { handleLetterGuessInput } from "./keyboard.mjs";
 import { gameData } from "./main.mjs";
 import { savePlayerScore } from "./score.mjs";
@@ -150,16 +156,24 @@ export function initUI() {
     .getElementById("close-button-fim")
     .addEventListener("click", closeFim);
 
-    document
+  document
     .getElementById("close-button-config")
     .addEventListener("click", closeConfig);
 
-    document
-    .getElementById("change-theme-game")
-    .addEventListener("click", changeSubject);
+  const buttonsSubjectButton = document.querySelectorAll(
+    ".change-subject-game"
+  );
+  buttonsSubjectButton.forEach((button) => {
+    button.addEventListener("click", () => {
+      stopTimer();
+      changeSubject(button.id);
+      lerArquivoEPreencherArray(0);
+      closeConfig();
+    });
+  });
 
-  const buttons = document.querySelectorAll(".change-size-game");
-  buttons.forEach((button) => {
+  const buttonsSizeButton = document.querySelectorAll(".change-size-game");
+  buttonsSizeButton.forEach((button) => {
     button.addEventListener("click", () => {
       const size = parseInt(button.textContent);
 
@@ -177,4 +191,15 @@ export function initUI() {
       //none.classList.remove("display-none");
     });
   }, 2000);
+}
+
+export function loadingLayer(showLoading) {
+  if (showLoading) {
+    const loadingLayer = document.getElementById("loading-layer");
+    loadingLayer.classList.remove("hide");
+    loadingLayer.classList.add("show");
+  } else {
+    const loadingLayer = document.getElementById("loading-layer");
+    loadingLayer.classList.add("hide");
+  }
 }
