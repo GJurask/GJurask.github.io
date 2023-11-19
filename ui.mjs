@@ -102,8 +102,7 @@ function toggleThemeMode() {
 export function clearKeyStyles() {
   const keys = document.querySelectorAll(".key");
   keys.forEach((key) => {
-    key.style.backgroundColor = "";
-    key.style.color = "";
+    key.classList.remove("incorrect-position-letter", "incorrect-letter", "correct-letter");
   });
 }
 
@@ -201,5 +200,22 @@ export function loadingLayer(showLoading) {
   } else {
     const loadingLayer = document.getElementById("loading-layer");
     loadingLayer.classList.add("hide");
+  }
+}
+
+export function changeLetterColor(element, correctPos = null) {
+  element.classList.remove("incorrect-position-letter", "incorrect-letter");
+  if (correctPos == null) element.classList.add("incorrect-letter");
+  else if (correctPos) element.classList.add("correct-letter");
+  else element.classList.add('incorrect-position-letter');
+
+}
+
+export function showAnswer(espelhoLetters) {
+  for (let i = 0; i < gameData.wordToGuess.length; i++) {
+    espelhoLetters[i].textContent = gameData.wordToGuess[i];
+    if (!espelhoLetters[i].classList.contains("correct-letter")) {
+      changeLetterColor(espelhoLetters[i]);
+    }
   }
 }

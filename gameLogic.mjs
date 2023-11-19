@@ -1,6 +1,14 @@
 import { highlightKeyboardKeys } from "./keyboard.mjs";
 import { gameData, PONTUACAO_MAXIMA } from "./main.mjs";
-import { clearKeyStyles, createLetterGrid, openEndScreen, showToast, updateTimerDisplay } from "./ui.mjs";
+import {
+  changeLetterColor,
+  clearKeyStyles,
+  createLetterGrid,
+  openEndScreen,
+  showAnswer,
+  showToast,
+  updateTimerDisplay,
+} from "./ui.mjs";
 import { arrayPosicoesAleatorias, playAudio, removeAccents } from "./utils.mjs";
 
 const timerAudio = document.getElementById("timerAudio");
@@ -37,9 +45,7 @@ export function initiateGame() {
     "Tentativas restantes: ";
   document.getElementById("guess-button").disabled = false;
 
-  custoDica = Math.floor(
-    PONTUACAO_MAXIMA / (gameData.wordToGuess.length - 1)
-  );
+  custoDica = Math.floor(PONTUACAO_MAXIMA / (gameData.wordToGuess.length - 1));
   document.getElementById(
     "custo-dica"
   ).textContent = `Você perde ${custoDica} pontos por dica!`;
@@ -58,7 +64,7 @@ export function provideHint() {
     const j = posicoes[i];
     if (espelhoLetras[j].textContent === "") {
       espelhoLetras[j].textContent = gameData.wordToGuess[j];
-      espelhoLetras[j].style.backgroundColor = "green";
+      changeLetterColor(espelhoLetras[j], true);
       gameData.correctLetters.push(gameData.wordToGuess[j]);
       startTimer();
       gameData.dicasDadas++;
@@ -89,7 +95,10 @@ export function updateScore() {
   const timerDisplay = document.getElementById("pontos");
   timerDisplay.textContent = gameData.pontuacaoFinal;
 
-  if (gameData.pontuacaoFinal <= 500 && !timerDisplay.classList.contains("red-font")) {
+  if (
+    gameData.pontuacaoFinal <= 500 &&
+    !timerDisplay.classList.contains("red-font")
+  ) {
     timerDisplay.classList.add("red-font");
   } else if (
     gameData.pontuacaoFinal > 500 &&
@@ -105,7 +114,7 @@ export function stopTimer() {
   timerInterval = undefined;
 }
 
-export function changeSubject(subject){
+export function changeSubject(subject) {
   gameData.subject = subject;
 }
 
@@ -137,23 +146,26 @@ export function checkGuess() {
   for (let i = 0; i < gameData.wordToGuess.length; i++) {
     letters[i].textContent = guess[i];
     if (normalizedGuess[i] === removeAccents(gameData.wordToGuess[i])) {
-      letters[i].style.backgroundColor = "green";
-      espelhoLetters[i].style.backgroundColor = "green";
+      changeLetterColor(espelhoLetters[i], true);
+      changeLetterColor(letters[i], true);
       espelhoLetters[i].textContent = guess[i];
       gameData.correctLetters.push(normalizedGuess[i]);
       correctCount++;
       copiaWordToGuess[i] = "_";
+      letters[i].classList.add("flip");
     }
   }
 
   for (let i = 0; i < gameData.wordToGuess.length; i++) {
     if (normalizedGuess[i] === removeAccents(gameData.wordToGuess[i])) {
     } else if (copiaWordToGuess.join("").includes(normalizedGuess[i])) {
-      letters[i].style.backgroundColor = "#f7f603";
+      changeLetterColor(letters[i], false);
       gameData.incorrectPositions.push(normalizedGuess[i]);
       copiaWordToGuess[copiaWordToGuess.indexOf(normalizedGuess[i])] = "_";
+      letters[i].classList.add("shake");
     } else {
-      letters[i].style.backgroundColor = "lightgray";
+      letters[i].classList.add("shake");
+      changeLetterColor(letters[i]);
       gameData.incorrectLetter.push(normalizedGuess[i]);
     }
   }
@@ -166,10 +178,6 @@ export function checkGuess() {
 
     //createConfetti();
   } else {
-    for (let i = 0; i < gameData.wordToGuess.length; i++) {
-      letters[i].classList.add("shake");
-    }
-
     gameData.attemptsLeft--;
 
     document.getElementById("attempts-left").textContent =
@@ -180,11 +188,7 @@ export function checkGuess() {
       document.getElementById("attempts-left").textContent = ".";
       resultMessage.textContent = `Suas tentativas acabaram. F`;
 
-      for (let i = 0; i < gameData.wordToGuess.length; i++) {
-        espelhoLetters[i].textContent = gameData.wordToGuess[i];
-        if (espelhoLetters[i].style.backgroundColor != "green")
-          espelhoLetters[i].style.backgroundColor = "red";
-      }
+      showAnswer(espelhoLetters);
       document.getElementById("guess-button").disabled = true;
     }
   }

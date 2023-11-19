@@ -25,20 +25,23 @@
 
     <div class="title-div">
       <h1 class="transparente">|</h1>
-      <h1 class="title">Jurask Wordle...</h1>
+      <h1 class="title">🦖Jurask Wordle...</h1>
     </div>
-    <div class="timer">
+    <!--  <div class="timer">
       <strong>Tempo: </strong>
       <p id="timer">00:00</p>
     </div>
     <div class="pontos">
       <strong>Pontos: </strong>
       <p id="pontos">2000</p>
-    </div>
+    </div> -->
 
     <div id="confetti-container"></div>
     <div id="theme-toggle-container">
       <button class="button" id="config-toggle">Configs</button>
+    </div>
+
+    <div id="dica-div">
       <button class="button tooltip" id="dica-button">
         Dica
         <span class="tooltiptext tooltip-left" id="custo-dica"
@@ -48,7 +51,18 @@
     </div>
 
     <div class="wordle-container">
+      <div class="timer-pontos">
+        <div class="pontos">
+          <strong>Pontos: </strong>
+          <p id="pontos">2000</p>
+        </div>
+        <div class="timer">
+          <p class="icone-timer">⏱️</p>
+          <p id="timer">00:00</p>
+        </div>
+      </div>
       <div id="preencher"></div>
+
       <input class="input" type="text" id="guess-input" />
       <button class="button" id="guess-button">Dale</button>
       <div id="espelho-resposta"></div>

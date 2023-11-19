@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const j = posicoes[i];
       if (espelhoLetras[j].textContent === "") {
         espelhoLetras[j].textContent = wordToGuess[j];
-        espelhoLetras[j].style.backgroundColor = "green";
+        espelhoLetras[j].style.backgroundColor = "#00919c";
         correctLetters.push(wordToGuess[j]);
         startTimer();
         dicasDadas++;
@@ -489,8 +489,8 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < wordToGuess.length; i++) {
       letters[i].textContent = guess[i];
       if (normalizedGuess[i] === removeAccents(wordToGuess[i])) {
-        letters[i].style.backgroundColor = "green";
-        espelhoLetters[i].style.backgroundColor = "green";
+        letters[i].style.backgroundColor = "#00919c";
+        espelhoLetters[i].style.backgroundColor = "#00919c";
         espelhoLetters[i].textContent = guess[i];
         correctLetters.push(normalizedGuess[i]);
         correctCount++;
@@ -533,7 +533,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (let i = 0; i < wordToGuess.length; i++) {
           espelhoLetters[i].textContent = wordToGuess[i];
-          if (espelhoLetters[i].style.backgroundColor != "green")
+          if (espelhoLetters[i].style.backgroundColor != "#00919c")
             espelhoLetters[i].style.backgroundColor = "red";
         }
         document.getElementById("guess-button").disabled = true;
@@ -562,7 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     correctLetters.forEach((letter) => {
       const key = document.querySelector(`[data-key="${letter}"]`);
-      key.style.backgroundColor = "green";
+      key.style.backgroundColor = "#00919c";
       key.style.color = "white";
     });
   }

@@ -1,22 +1,20 @@
 import { gameData } from "./main.mjs";
+import { changeLetterColor } from "./ui.mjs";
 
 export function highlightKeyboardKeys() {
   gameData.incorrectLetter.forEach((letter) => {
     const key = document.querySelector(`[data-key="${letter}"]`);
-    key.style.backgroundColor = "black";
-    key.style.color = "white";
+    changeLetterColor(key);
   });
 
   gameData.incorrectPositions.forEach((letter) => {
     const key = document.querySelector(`[data-key="${letter}"]`);
-    key.style.backgroundColor = "#f7f603";
-    key.style.color = "black";
+    changeLetterColor(key, false);
   });
 
   gameData.correctLetters.forEach((letter) => {
     const key = document.querySelector(`[data-key="${letter}"]`);
-    key.style.backgroundColor = "green";
-    key.style.color = "white";
+    changeLetterColor(key, true);
   });
 }
 
