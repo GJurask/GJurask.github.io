@@ -1,0 +1,11 @@
+:root {
+  --primary-bg-color: #fff;
+  --primary-text-color: #333;
+  --secondary-bg-color: #444;
+  --secondary-text-color: #fff;
+  --accent-color: #f1c839;
+  --button-bg-color: #00919c;
+  --correct-letter: #089c08;
+  --incorrect-letter: darkred;
+  --incorrect-position-letter: #f1c839;
+}

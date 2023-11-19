@@ -1,14 +1,4 @@
-:root {
-  --primary-bg-color: #fff;
-  --primary-text-color: #333;
-  --secondary-bg-color: #444;
-  --secondary-text-color: #fff;
-  --accent-color: #f1c839;
-  --button-bg-color: #00919c;
-  --correct-letter: #089c08;
-  --incorrect-letter: darkred;
-  --incorrect-position-letter: #f1c839;
-}
+@import 'variables.css';
 
 .correct-letter {
   background-color: var(--correct-letter) !important;
@@ -78,16 +68,14 @@ body.dark-theme {
     color: #000;
   }
 
-  #scoreboard th {
-    color: var(--secondary-text-color);
-  }
   #scoreboard {
-    background-color: #315;
+    background-color: var(--accent-color);
     color: var(--secondary-text-color);
   }
 
   #scoreboard thead {
-    background-color: #315;
+    background-color:  var(--accent-color);
+    color: var(--secondary-bg-color);
   }
 
   #scoreboard tbody tr:nth-child(even) {
@@ -102,7 +90,7 @@ body.dark-theme {
 .wordle-container {
   margin-top: 20px;
   background-color: var(--primary-bg-color);
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transition: background-color 1s, color 1s;
@@ -218,7 +206,7 @@ input {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 20px;
+  top: 200px;
   z-index: 999;
   left: 20px;
 }
@@ -229,7 +217,7 @@ input {
   position: absolute;
   top: 20px;
   right: 20px;
-  z-index: 99;
+  z-index: 1;
   margin-top: 100px;
 }
 
@@ -325,7 +313,7 @@ input {
 #scoreboard {
   border-collapse: collapse;
   width: 100%;
-  background-color: #d7d7d7;
+  background-color: var(--button-bg-color);
   color: var(--primary-text-color);
   margin-top: 20px;
   border-radius: 10px;
@@ -334,8 +322,8 @@ input {
 }
 
 #scoreboard thead {
-  background-color: #d6d6d6;
-  color: #000;
+  background-color: var(--button-bg-color);
+  color: var(--secondary-text-color);
 }
 
 #scoreboard th {
@@ -535,7 +523,7 @@ input {
 }
 
 .letter:empty {
-  background-image: url("assets/jwlogo.png");
+  background-image: url("../assets/jwlogo.png");
   background-size: cover;
   display: inline-block;
 }

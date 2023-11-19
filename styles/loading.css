@@ -6,7 +6,16 @@
   font-family: ‘Arial Narrow’, sans-serif;
   font-weight: 100;
   font-size: 5em;
-  color: #42136d;
+}
+
+#loading-layer h1:first-child span:nth-child(odd),
+#loading-layer h1:last-child span:nth-child(even){
+  color: var(--accent-color);
+}
+
+#loading-layer h1:first-child span:nth-child(even),
+#loading-layer h1:last-child span:nth-child(odd){
+  color: var(--button-bg-color);
 }
 
 #loading-layer span {

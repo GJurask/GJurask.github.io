@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <link rel="stylesheet" type="text/css" href="loading.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/loading.css" />
+    <link rel="stylesheet" type="text/css" href="styles/menu.css" />
     <!--  <link
       rel="stylesheet"
       href="https://cdn.mjsdelivr.net/npm/toastify@1.0.12/dist/toastify.min.css"
     /> -->
   </head>
   <body class="dark-theme">
+    <nav>
+      <div class="navbar">
+        <div class="container nav-container">
+          <input
+            class="checkbox"
+            id="config-toggle"
+            type="checkbox"
+            name=""
+            id=""
+          />
+          <div class="hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <audio id="timerAudio" loop>
-      <source src="timer.mp3" type="audio/mpeg" />
+      <source src="assets/timer.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
 
     <audio id="victoryAudio">
-      <source src="victory.mp3" type="audio/mpeg" />
+      <source src="assets/victory.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     <audio id="fAudio">
-      <source src="f.mp3" type="audio/mpeg" />
+      <source src="assets/f.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
 
@@ -37,9 +57,6 @@
     </div> -->
 
     <div id="confetti-container"></div>
-    <div id="theme-toggle-container">
-      <button class="button" id="config-toggle">Configs</button>
-    </div>
 
     <div id="dica-div">
       <button class="button tooltip" id="dica-button">
@@ -151,7 +168,6 @@
     </div>
     <div id="modal-config" class="modal hide display-none">
       <div class="modal-content">
-        <span class="close-button" id="close-button-config">&times;</span>
         <div class="config">
           <p id="config-message">Configurações</p>
         </div>
@@ -191,14 +207,14 @@
       </table>
     </div>
     <!-- <script src="script.js"></script> -->
-    <script type="module" src="ui.mjs"></script>
-    <script type="module" src="main.mjs"></script>
-    <script type="module" src="animation.mjs"></script>
-    <script type="module" src="decipher.mjs"></script>
-    <script type="module" src="fetchData.mjs"></script>
-    <script type="module" src="gameLogic.mjs"></script>
-    <script type="module" src="keyboard.mjs"></script>
-    <script type="module" src="score.mjs"></script>
-    <script type="module" src="utils.mjs"></script>
+    <script type="module" src="scripts/ui.mjs"></script>
+    <script type="module" src="scripts/main.mjs"></script>
+    <script type="module" src="scripts/animation.mjs"></script>
+    <script type="module" src="scripts/decipher.mjs"></script>
+    <script type="module" src="scripts/fetchData.mjs"></script>
+    <script type="module" src="scripts/gameLogic.mjs"></script>
+    <script type="module" src="scripts/keyboard.mjs"></script>
+    <script type="module" src="scripts/score.mjs"></script>
+    <script type="module" src="scripts/utils.mjs"></script>
   </body>
 </html>

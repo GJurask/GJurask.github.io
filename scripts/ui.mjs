@@ -63,11 +63,6 @@ function createRow(n) {
   return wordDisplay;
 }
 
-function closeConfig() {
-  const modalConfig = document.getElementById("modal-config");
-  modalConfig.classList.add("hide");
-}
-
 export function closeFim() {
   const modalFim = document.getElementById("modal-fim");
   modalFim.classList.add("hide");
@@ -81,12 +76,14 @@ export function openEndScreen() {
 
 function toggleConfigModal() {
   const modalConfig = document.getElementById("modal-config");
+  const configToggle = document.getElementById("config-toggle");
   if (modalConfig.classList.contains("hide")) {
     modalConfig.classList.remove("hide");
     modalConfig.classList.add("show");
+    configToggle.checked = true;
   } else {
-    //modalConfig.classList.remove("show");
     modalConfig.classList.add("hide");
+    configToggle.checked = false;
   }
 }
 
@@ -155,10 +152,6 @@ export function initUI() {
     .getElementById("close-button-fim")
     .addEventListener("click", closeFim);
 
-  document
-    .getElementById("close-button-config")
-    .addEventListener("click", closeConfig);
-
   const buttonsSubjectButton = document.querySelectorAll(
     ".change-subject-game"
   );
@@ -167,7 +160,7 @@ export function initUI() {
       stopTimer();
       changeSubject(button.id);
       lerArquivoEPreencherArray(0);
-      closeConfig();
+      toggleConfigModal();
     });
   });
 
@@ -179,7 +172,7 @@ export function initUI() {
       if (!isNaN(size)) {
         stopTimer();
         lerArquivoEPreencherArray(size);
-        closeConfig();
+        toggleConfigModal();
       }
     });
   });
