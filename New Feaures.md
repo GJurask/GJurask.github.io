@@ -1,3 +1,5 @@
+apresentar dica, mover dica pro backend para criptografar a msg
+
 colocar dica que bsuca no dicionário
 
 melhorar o loading qndo clica em escolher por letras.

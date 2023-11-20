@@ -1,3 +1,4 @@
+import { getHint } from "./fetchData.mjs";
 import { highlightKeyboardKeys } from "./keyboard.mjs";
 import { gameData, PONTUACAO_MAXIMA } from "./main.mjs";
 import {

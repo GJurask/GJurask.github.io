@@ -1,8 +1,44 @@
 import { animateTitleLetters } from "./animation.mjs";
 import { decifraDeSubstituicao } from "./decipher.mjs";
 import { initiateGame } from "./gameLogic.mjs";
-import { gameData, API } from "./main.mjs";
+import { gameData, API, HINT_API } from "./main.mjs";
 import { loadingLayer } from "./ui.mjs";
+
+export async function getHint(word) {
+  word = word.toLowerCase()
+  let hint = "";
+  try {
+    const url = HINT_API.replace("#", word); //letras minusculas);
+    let response = await fetch(url);
+    if (response.ok) {
+      const output = await response.json();
+      if (output.length > 0) {
+        hint = output[0].xml
+          .replace(/(<([^>]+)>)/gi, "")
+          .replace(/(\r\n|\n|\r)/gm, " ");
+        hint = hint.toLowerCase().trim();
+
+        let replacer = new RegExp(word, "g");
+        hint = hint.replace(replacer, "#".repeat(word.length));
+
+        replacer = new RegExp("\\(.+\\) *$", "g");
+        hint = hint.replace(replacer, "");
+        console.log(hint)
+      } else {
+        console.log(`SIGNIFICADO NÃO ENCONTRADO`);
+        return "";
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    loadingLayer(false);
+    const title = document.querySelector(".title");
+    title.innerHTML = title.textContent;
+  }
+
+  return hint;
+}
 
 export async function lerArquivoEPreencherArray(size) {
   try {
