@@ -99,7 +99,11 @@ function toggleThemeMode() {
 export function clearKeyStyles() {
   const keys = document.querySelectorAll(".key");
   keys.forEach((key) => {
-    key.classList.remove("incorrect-position-letter", "incorrect-letter", "correct-letter");
+    key.classList.remove(
+      "incorrect-position-letter",
+      "incorrect-letter",
+      "correct-letter"
+    );
   });
 }
 
@@ -197,11 +201,14 @@ export function loadingLayer(showLoading) {
 }
 
 export function changeLetterColor(element, correctPos = null) {
-  element.classList.remove("incorrect-position-letter", "incorrect-letter");
-  if (correctPos == null) element.classList.add("incorrect-letter");
-  else if (correctPos) element.classList.add("correct-letter");
-  else element.classList.add('incorrect-position-letter');
-
+  if (element) {
+    element.classList.remove("incorrect-position-letter", "incorrect-letter");
+    if (correctPos == null) element.classList.add("incorrect-letter");
+    else if (correctPos) element.classList.add("correct-letter");
+    else element.classList.add("incorrect-position-letter");
+  } else {
+    //rever pq está caindo aqui
+  }
 }
 
 export function showAnswer(espelhoLetters) {

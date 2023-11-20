@@ -89,7 +89,7 @@ export function updateScore() {
   gameData.pontuacaoFinal =
     pontuacaoBase +
     tentativasBonus -
-    gameData.timer*3 -
+    gameData.timer * 3 -
     letras -
     gameData.dicasDadas * custoDica;
 
@@ -177,10 +177,8 @@ export function checkGuess() {
     document.getElementById("guess-button").disabled = true;
     openEndScreen();
     for (let i = gameData.attemptsLeft - 1; i > 0; i--) {
-      const wordDisplayX = document.getElementById(
-        "word-display" + i
-      );
-      wordDisplayX.innerHTML = ""
+      const wordDisplayX = document.getElementById("word-display" + i);
+      wordDisplayX.innerHTML = "";
     }
 
     //createConfetti();
