@@ -1,3 +1,5 @@
+comprar nova tentativa - pagar com a moeda de ter resolvido uma palavra diaria sem usar dica e com pontuação positiva.
+
 apresentar dica, mover dica pro backend para criptografar a msg
 
 colocar dica que bsuca no dicionário

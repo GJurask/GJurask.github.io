@@ -89,7 +89,7 @@ export function updateScore() {
   gameData.pontuacaoFinal =
     pontuacaoBase +
     tentativasBonus -
-    gameData.timer -
+    gameData.timer*3 -
     letras -
     gameData.dicasDadas * custoDica;
 
