@@ -14,7 +14,7 @@ export const gameData = {
   dicasDadas : 0,
   pontuacaoFinal : PONTUACAO_MAXIMA,
   gotResponse : false,
-  subject: "dev"
+  subject: "all"
 }
 
 document.addEventListener("DOMContentLoaded", function () {
