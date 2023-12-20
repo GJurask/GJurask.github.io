@@ -1,4 +1,4 @@
-import { getPontuacoes } from "./fetchData.mjs";
+import { getPontuacoes, getPontuacoesTwitch, putPoints } from "./fetchData.mjs";
 import { gameData, API } from "./main.mjs";
 import { closeFim, showToast } from "./ui.mjs";
 import { formatTime } from "./utils.mjs";
@@ -43,4 +43,32 @@ function savePoints() {
     .catch((error) => {
       console.error(error);
     });
+}
+
+export function getPosicao(username){
+  //filtrar o array leaderboard pelo nome do usaruio
+  console.log(gameData.leaderboard)
+  return gameData.leaderboard.findIndex((user) => user.nome == username) + 1;  
+}
+
+export async function saveTwitchPoints(nome, pontuacao, img) {
+  const novaPontuacao = {
+    nome,
+    pontuacao,
+    img
+  };
+  fetch(API + "salvarPontuacaoTwitch", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(novaPontuacao),
+  })
+    .then((response) => {
+      putPoints(response, "Twitch")
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
 }

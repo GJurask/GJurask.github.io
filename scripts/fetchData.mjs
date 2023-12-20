@@ -40,7 +40,7 @@ export async function getHint(word) {
   return hint;
 }
 
-export async function lerArquivoEPreencherArray(size) {
+export async function lerArquivoEPreencherArray(size,twitch) {
   try {
     loadingLayer(true);
     animateTitleLetters();
@@ -58,8 +58,11 @@ export async function lerArquivoEPreencherArray(size) {
 
       const output = await response.json();
       gameData.wordToGuess = decifraDeSubstituicao(output.palavra.trim());
-
-      getPontuacoes();
+      if (twitch){
+        getPontuacoesTwitch();
+      } else {
+        getPontuacoes();
+      }
       initiateGame();
     }
   } catch (error) {
@@ -78,43 +81,81 @@ export async function getPontuacoes() {
     );
 
     if (response.ok) {
-      const scoreboardTable = document.getElementById("scoreboard");
-      const scoreboardBody = scoreboardTable.querySelector("tbody");
-      while (scoreboardBody.firstChild) {
-        scoreboardBody.removeChild(scoreboardBody.firstChild);
-      }
-
-      const scores = await response.json();
-
-      scores.forEach((score) => {
-        const row = document.createElement("tr");
-        const playerNameCell = document.createElement("td");
-        const playerScoreCell = document.createElement("td");
-        const playerWordCell = document.createElement("td");
-        const playerDataCell = document.createElement("td");
-        const playerTimeCell = document.createElement("td");
-        const playerDicasCell = document.createElement("td");
-
-        playerNameCell.textContent = score.nome;
-        playerScoreCell.textContent = score.pontuacao;
-        playerWordCell.textContent = score.palavra;
-        playerDataCell.textContent = score.data;
-        playerTimeCell.textContent = score.time;
-        playerDicasCell.textContent = score.dicas ? score.dicas : 0;
-
-        row.appendChild(playerNameCell);
-        row.appendChild(playerScoreCell);
-        row.appendChild(playerWordCell);
-        row.appendChild(playerTimeCell);
-        row.appendChild(playerDicasCell);
-        row.appendChild(playerDataCell);
-
-        scoreboardBody.appendChild(row);
-      });
+      putPoints(response, "");      
     } else {
       console.error("Failed to fetch scores:", response.status);
     }
   } catch (error) {
     console.error("Error:", error);
   }
+}
+
+export async function getPontuacoesTwitch() {
+  try {
+    const response = await fetch(
+      `${API}pontuacoesTwitch`
+    );
+
+    if (response.ok) {    
+      putPoints(response, "Twitch")
+    } else {
+      console.error("Failed to fetch scores:", response.status);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+
+export async function putPoints(response, leaderboard) {
+  console.log('atualizando pontuação')
+  const scoreboardTable = document.getElementById("scoreboard" + leaderboard);
+  const scoreboardBody = scoreboardTable.querySelector("tbody");
+  while (scoreboardBody.firstChild) {
+    scoreboardBody.removeChild(scoreboardBody.firstChild);
+  }
+  const scores = await response.json();
+  gameData.leaderboard = scores;
+
+  scores.slice(0, 10).forEach((score, index) => {
+    const row = document.createElement("tr");
+    const playerPosCell = document.createElement("td");
+    playerPosCell.textContent = `${index + 1}º`;
+    row.appendChild(playerPosCell);
+
+    const playerImgCell = document.createElement("td");        
+    const userIcon = document.createElement("div");
+    userIcon.classList.add("user-icon");
+    userIcon.style.backgroundImage = `url('${score.img}')`;
+    playerImgCell.appendChild(userIcon);
+    row.appendChild(playerImgCell);
+
+    const playerNameCell = document.createElement("td");
+    playerNameCell.textContent = score.nome;    
+    row.appendChild(playerNameCell);
+
+    if (!leaderboard){
+      const playerWordCell = document.createElement("td");
+      const playerDataCell = document.createElement("td");
+      const playerTimeCell = document.createElement("td");
+      const playerDicasCell = document.createElement("td");
+      playerWordCell.textContent = score.palavra;
+      playerDataCell.textContent = score.data;
+      playerTimeCell.textContent = score.time;
+      playerDicasCell.textContent = score.dicas ? score.dicas : 0;
+      row.appendChild(playerWordCell);
+      row.appendChild(playerTimeCell);
+      row.appendChild(playerDicasCell);
+      row.appendChild(playerDataCell);
+    } else {
+      const nullCell = document.createElement("td");
+      nullCell.textContent = "     ";
+      row.appendChild(nullCell);
+    }
+    const playerScoreCell = document.createElement("td");
+    playerScoreCell.textContent = score.pontuacao;
+    row.appendChild(playerScoreCell);
+
+    scoreboardBody.appendChild(row);
+  });
 }

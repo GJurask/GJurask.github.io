@@ -29,3 +29,10 @@ export function handleLetterGuessInput(letter) {
     }
   }
 }
+
+export function handleTextUpdateInput(text) {
+  if (gameData.attemptsLeft > 0) {
+    const guessInput = document.getElementById("guess-input");
+    guessInput.value = text.toUpperCase();
+  }
+}

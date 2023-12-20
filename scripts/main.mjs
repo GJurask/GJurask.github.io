@@ -14,10 +14,18 @@ export const gameData = {
   dicasDadas : 0,
   pontuacaoFinal : PONTUACAO_MAXIMA,
   gotResponse : false,
-  subject: "all"
+  subject: "all",
+  leaderboard: []
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   initUI();
-  lerArquivoEPreencherArray(0);
+  lerArquivoEPreencherArray(0,true);
 });
+
+export function f5(){
+  if(gameData.attemptsLeft == 0){
+    window.location.reload();
+    return true;
+  } else return false;
+}

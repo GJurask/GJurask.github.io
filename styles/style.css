@@ -1,4 +1,4 @@
-@import 'variables.css';
+@import "variables.css";
 
 .correct-letter {
   background-color: var(--correct-letter) !important;
@@ -35,7 +35,15 @@ body.dark-theme {
     background-color: #555;
     border-color: #777;
   }
-  
+    
+  .red-font {
+    color: var(--accent-color);
+  }
+
+  .instruction-container, .scoreboard-twitch-container, .screen-container, .webcam-container {
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-bg-color);
+  }
   .wordle-container {
     margin-top: 20px;
     color: var(--secondary-text-color);
@@ -74,7 +82,7 @@ body.dark-theme {
   }
 
   #scoreboard thead {
-    background-color:  var(--accent-color);
+    background-color: var(--accent-color);
     color: var(--secondary-bg-color);
   }
 
@@ -85,6 +93,50 @@ body.dark-theme {
   #scoreboard tbody tr:nth-child(odd) {
     background-color: var(--primary-text-color);
   }
+}
+
+.right-container, .left-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-container{
+  flex-grow: 1;
+}
+
+.instruction-container, .scoreboard-twitch-container {
+  margin: 5px 5px 5px 20px;
+  background-color: var(--primary-bg-color);
+  padding: 10px 20px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 1s, color 1s;
+  font-size: x-large;
+  text-align: left;
+}
+
+.main-game{
+  max-width: 1200px;
+}
+
+.screen-container, .webcam-container {
+  margin: 5px 20px 5px 5px;
+  background-color: var(--primary-bg-color);
+  padding: 10px 20px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 1s, color 1s;
+  font-size: x-large;
+  text-align: left;
+}
+
+.red-font {
+  color: var(--button-bg-color);
+}
+
+.scoreboard-twitch-container, .screen-container, .webcam-container {
+  flex-grow: 1;
+  text-align: center;
 }
 
 .wordle-container {
@@ -187,15 +239,14 @@ input {
   flex-wrap: wrap;
 }
 
-.icone-timer{
+.icone-timer {
   padding-bottom: 5px;
-
 }
 
 .timer {
   display: flex;
   align-items: center;
-  margin-left: 20px
+  margin-left: 20px;
 }
 .pontos {
   display: flex;
@@ -218,7 +269,7 @@ input {
   top: 20px;
   right: 20px;
   z-index: 1;
-  margin-top: 100px;
+  margin-top: 11px;
 }
 
 @keyframes shake {
@@ -343,6 +394,15 @@ input {
   margin-top: 20px;
 }
 
+.body {
+  display: flex;
+}
+
+.main-game {
+  flex-grow: 1;
+}
+
+
 #scoreboard {
   margin: 0 auto;
 }
@@ -465,6 +525,14 @@ input {
   border-bottom: 1px dotted black;
 }
 
+.hidden {
+  content-visibility: hidden;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
@@ -517,6 +585,47 @@ input {
   text-transform: uppercase;
 }
 
+#espelho-resposta {
+  border-style: outset;
+  border-color: black;
+}
+
+.arrow-text, .points-text {
+  color: var(--primary-bg-color);
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  transition: background-color 1s, color 1s;
+  border-color: black;
+  border-radius: 25px;
+  text-transform: uppercase;
+  border-style: outset;
+  background-size: cover;
+  background-image: url("../assets/twitchFinal.png");
+}
+
+.user-icon:not(:empty) {
+  background-image: none !important;
+  background-color: var(--correct-letter);
+  border-color: black;
+  -webkit-text-stroke-width: thick;
+}
+
+#scoreboardTwitch th, #scoreboardTwitch td{
+  text-align: left;
+}
+#scoreboardTwitch th:last-child, #scoreboardTwitch td:last-child {
+  text-align: right;
+}
+
+
 .letter:not(:empty) {
   background-color: #d3d3d3;
   border-color: black;
@@ -524,6 +633,12 @@ input {
 
 .letter:empty {
   background-image: url("../assets/jwlogo.png");
+  background-size: cover;
+  display: inline-block;
+}
+
+#word-displayespelho > .letter:empty {
+  background-image: url("../assets/interroga.jpg");
   background-size: cover;
   display: inline-block;
 }
@@ -536,4 +651,10 @@ input {
 .title span:first-child {
   display: inline !important;
   transform: scaleX(1) !important;
+}
+
+#scoreboardTwitch td {
+  
+  padding: 0px !important;
+
 }

@@ -10,213 +10,244 @@
     /> -->
   </head>
   <body class="dark-theme">
-    <nav>
-      <div class="navbar">
-        <div class="container nav-container">
-          <input
-            class="checkbox"
-            id="config-toggle"
-            type="checkbox"
-            name=""
-            id=""
-          />
-          <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
+    <div class="body">
+      <div class="left-container">
+        <div class="screen-container"></div>
+        <div class="webcam-container"></div>
+      </div>
+      <div class="main-game">
+        <nav>
+          <div class="navbar">
+            <div class="container nav-container">
+              <input
+                class="checkbox"
+                id="config-toggle"
+                type="checkbox"
+                name=""
+                id=""
+              />
+              <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+              </div>
+            </div>
           </div>
+        </nav>
+
+        <audio id="timerAudio" loop>
+          <source src="assets/timer.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+
+        <audio id="victoryAudio">
+          <source src="assets/victory.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+        <audio id="fAudio">
+          <source src="assets/f.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+
+        <div class="title-div">
+          <h1 class="transparente">|</h1>
+          <h1 class="title">🦖Jurask Wordle...</h1>
         </div>
-      </div>
-    </nav>
+        <div id="confetti-container"></div>
 
-    <audio id="timerAudio" loop>
-      <source src="assets/timer.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-
-    <audio id="victoryAudio">
-      <source src="assets/victory.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="fAudio">
-      <source src="assets/f.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-
-    <div class="title-div">
-      <h1 class="transparente">|</h1>
-      <h1 class="title">🦖Jurask Wordle...</h1>
-    </div>
-    <!--  <div class="timer">
-      <strong>Tempo: </strong>
-      <p id="timer">00:00</p>
-    </div>
-    <div class="pontos">
-      <strong>Pontos: </strong>
-      <p id="pontos">2000</p>
-    </div> -->
-
-    <div id="confetti-container"></div>
-
-    <div id="dica-div">
-      <button class="button tooltip" id="dica-button">
-        Dica
-        <span class="tooltiptext tooltip-left" id="custo-dica"
-          >Você perde 0 pontos por dica!</span
-        >
-      </button>
-    </div>
-
-    <div class="wordle-container">
-      <div class="timer-pontos">
-        <div class="pontos">
-          <strong>Pontos: </strong>
-          <p id="pontos">2000</p>
-        </div>
-        <div class="timer">
-          <p class="icone-timer">⏱️</p>
-          <p id="timer">00:00</p>
-        </div>
-      </div>
-      <div id="preencher"></div>
-
-      <input class="input" type="text" id="guess-input" />
-      <button class="button" id="guess-button">Dale</button>
-      <div id="espelho-resposta"></div>
-      <div class="attempts">
-        <p id="attempts">
-          <span id="attempts-left-message">Tentativas restantes: </span
-          ><span id="attempts-left"></span>
-        </p>
-      </div>
-    </div>
-
-    <div id="toast" class="hidden"></div>
-    <div class="keyboard">
-      <div class="row">
-        <div class="key" data-key="Q">Q</div>
-        <div class="key" data-key="W">W</div>
-        <div class="key" data-key="E">E</div>
-        <div class="key" data-key="R">R</div>
-        <div class="key" data-key="T">T</div>
-        <div class="key" data-key="Y">Y</div>
-        <div class="key" data-key="U">U</div>
-        <div class="key" data-key="I">I</div>
-        <div class="key" data-key="O">O</div>
-        <div class="key" data-key="P">P</div>
-      </div>
-      <div class="row">
-        <div class="key" data-key="A">A</div>
-        <div class="key" data-key="S">S</div>
-        <div class="key" data-key="D">D</div>
-        <div class="key" data-key="F">F</div>
-        <div class="key" data-key="G">G</div>
-        <div class="key" data-key="H">H</div>
-        <div class="key" data-key="J">J</div>
-        <div class="key" data-key="K">K</div>
-        <div class="key" data-key="L">L</div>
-      </div>
-      <div class="row">
-        <div class="key" data-key="Z">Z</div>
-        <div class="key" data-key="X">X</div>
-        <div class="key" data-key="C">C</div>
-        <div class="key" data-key="V">V</div>
-        <div class="key" data-key="B">B</div>
-        <div class="key" data-key="N">N</div>
-        <div class="key" data-key="M">M</div>
-      </div>
-    </div>
-    <div id="modal-fim" class="modal hide display-none">
-      <div class="modal-content">
-        <div class="result">
-          <p id="result-message">
-            Congrats! Você adivinhou a palavra, mesmo ela sendo full aleatória,
-            no plural, ou talvez você nunca ter ouvido falar nela.
-          </p>
-        </div>
-        <span class="close-button" id="close-button-fim">&times;</span>
-        <input
-          class="input"
-          type="text"
-          id="player-name"
-          placeholder="Seu nome"
-          maxlength="5"
-        />
-        <button class="button" id="save-score-button">Salvar Pontuação</button>
-      </div>
-    </div>
-
-    <div id="loading-layer" class="modal hide display-none">
-      <h1>
-        <span class="let1">g</span>
-        <span class="let2">e</span>
-        <span class="let3">r</span>
-        <span class="let4">a</span>
-        <span class="let5">n</span>
-        <span class="let6">d</span>
-        <span class="let7">o</span>
-      </h1>
-      <h1>
-        <span class="let7">P</span>
-        <span class="let6">A</span>
-        <span class="let5">L</span>
-        <span class="let4">A</span>
-        <span class="let3">V</span>
-        <span class="let2">R</span>
-        <span class="let1">A</span>
-      </h1>
-    </div>
-    <div id="modal-config" class="modal hide display-none">
-      <div class="modal-content">
-        <div class="config">
-          <p id="config-message">Configurações</p>
-        </div>
-        <div class="config-buttons">
-          <p id="config-message">Assunto:</p>
-          <button class="button change-subject-game" id="all">De tudo!</button>
-          <button class="button change-subject-game" id="dev">Dev</button>
-        </div>
-        <div class="config-buttons">
-          <p id="config-message">Quantidade de letras:</p>
-          <button class="button change-size-game" id="init-game-4">4</button>
-          <button class="button change-size-game" id="init-game-5">5</button>
-          <button class="button change-size-game" id="init-game-6">6</button>
-          <button class="button change-size-game" id="init-game-7">7</button>
-          <button class="button change-size-game" id="init-game-8">8</button>
-          <button class="button change-size-game" id="init-game-9">9</button>
-        </div>
-        <div class="config-buttons">
-          <button class="button change-size-game" id="theme-toggle">
-            Alternar Cores
+        <div id="dica-div" class="hidden">
+          <button class="button tooltip" id="dica-button">
+            Dica
+            <span class="tooltiptext tooltip-left" id="custo-dica"
+              >Você perde 0 pontos por dica!</span
+            >
           </button>
         </div>
+
+        <div class="wordle-container">
+          <div class="timer-pontos hidden">
+            <div class="pontos">
+              <strong>Pontos: </strong>
+              <p id="pontos">2000</p>
+            </div>
+            <div class="timer">
+              <p class="icone-timer">⏱️</p>
+              <p id="timer">00:00</p>
+            </div>
+          </div>
+          <div id="preencher"></div>
+          <div class="hidden">
+            <input class="input" type="text" id="guess-input" />
+            <button class="button" id="guess-button">Dale</button>
+          </div>
+          <div id="espelho-resposta"></div>
+          <div class="attempts">
+            <p id="attempts">
+              <span id="attempts-left-message">Tentativas restantes: </span
+              ><span id="attempts-left"></span>
+            </p>
+          </div>
+        </div>
+
+        <div id="toast" class="hidden"></div>
+        <div class="keyboard">
+          <div class="row">
+            <div class="key" data-key="Q">Q</div>
+            <div class="key" data-key="W">W</div>
+            <div class="key" data-key="E">E</div>
+            <div class="key" data-key="R">R</div>
+            <div class="key" data-key="T">T</div>
+            <div class="key" data-key="Y">Y</div>
+            <div class="key" data-key="U">U</div>
+            <div class="key" data-key="I">I</div>
+            <div class="key" data-key="O">O</div>
+            <div class="key" data-key="P">P</div>
+          </div>
+          <div class="row">
+            <div class="key" data-key="A">A</div>
+            <div class="key" data-key="S">S</div>
+            <div class="key" data-key="D">D</div>
+            <div class="key" data-key="F">F</div>
+            <div class="key" data-key="G">G</div>
+            <div class="key" data-key="H">H</div>
+            <div class="key" data-key="J">J</div>
+            <div class="key" data-key="K">K</div>
+            <div class="key" data-key="L">L</div>
+          </div>
+          <div class="row">
+            <div class="key" data-key="Z">Z</div>
+            <div class="key" data-key="X">X</div>
+            <div class="key" data-key="C">C</div>
+            <div class="key" data-key="V">V</div>
+            <div class="key" data-key="B">B</div>
+            <div class="key" data-key="N">N</div>
+            <div class="key" data-key="M">M</div>
+          </div>
+        </div>
+        <div id="modal-fim" class="modal hide display-none">
+          <div class="modal-content">
+            <div class="result">
+              <p id="result-message">
+                Congrats! Você adivinhou a palavra, mesmo ela sendo full
+                aleatória, no plural, ou talvez você nunca ter ouvido falar
+                nela.
+              </p>
+            </div>
+            <span class="close-button" id="close-button-fim">&times;</span>
+            <input
+              class="input"
+              type="text"
+              id="player-name"
+              placeholder="Seu nome"
+              maxlength="5"
+            />
+            <button class="button" id="save-score-button">
+              Salvar Pontuação
+            </button>
+          </div>
+        </div>
+
+        <div id="loading-layer" class="modal hide display-none">
+          <h1>
+            <span class="let1">g</span>
+            <span class="let2">e</span>
+            <span class="let3">r</span>
+            <span class="let4">a</span>
+            <span class="let5">n</span>
+            <span class="let6">d</span>
+            <span class="let7">o</span>
+          </h1>
+          <h1>
+            <span class="let7">P</span>
+            <span class="let6">A</span>
+            <span class="let5">L</span>
+            <span class="let4">A</span>
+            <span class="let3">V</span>
+            <span class="let2">R</span>
+            <span class="let1">A</span>
+          </h1>
+        </div>
+        <div id="modal-config" class="modal hide display-none">
+          <div class="modal-content">
+            <div class="config">
+              <p id="config-message">Configurações</p>
+            </div>
+            <div class="config-buttons">
+              <p id="config-message">Assunto:</p>
+              <button class="button change-subject-game" id="all">
+                De tudo!
+              </button>
+              <button class="button change-subject-game" id="dev">Dev</button>
+            </div>
+            <div class="config-buttons">
+              <p id="config-message">Quantidade de letras:</p>
+              <button class="button change-size-game" id="init-game-4">
+                4
+              </button>
+              <button class="button change-size-game" id="init-game-5">
+                5
+              </button>
+              <button class="button change-size-game" id="init-game-6">
+                6
+              </button>
+              <button class="button change-size-game" id="init-game-7">
+                7
+              </button>
+              <button class="button change-size-game" id="init-game-8">
+                8
+              </button>
+              <button class="button change-size-game" id="init-game-9">
+                9
+              </button>
+            </div>
+            <div class="config-buttons">
+              <button class="button change-size-game" id="theme-toggle">
+                Alternar Cores
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="scoreboard-container hidden">
+          <table id="scoreboard">
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th>Pontuação</th>
+                <th>Palavra</th>
+                <th>Tempo</th>
+                <th>Dicas</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <script type="module" src="dist/bot.bundle.js"></script>
+      </div>
+      <div class="right-container">
+        <div class="scoreboard-twitch-container">
+          <table id="scoreboardTwitch">
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th></th>
+                <th>Jogador</th>
+                <th>&nbsp;&nbsp;</th>
+                <th>Pontos</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="instruction-container">
+          <strong class="red-font">Como jogar:<br /></strong>
+          Digite seu palpite iniciando<br />
+          com ponto de exclamação <strong class="red-font">!</strong>
+          <br />Exemplo: <strong class="red-font">!xuxu</strong><br />
+          Para saber sua posição <strong class="red-font">!meuplacar</strong>
+        </div>
       </div>
     </div>
-
-    <div class="scoreboard-container">
-      <table id="scoreboard">
-        <thead>
-          <tr>
-            <th>Jogador</th>
-            <th>Pontuação</th>
-            <th>Palavra</th>
-            <th>Tempo</th>
-            <th>Dicas</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <!-- <script src="script.js"></script> -->
-    <script type="module" src="scripts/ui.mjs"></script>
-    <script type="module" src="scripts/main.mjs"></script>
-    <script type="module" src="scripts/animation.mjs"></script>
-    <script type="module" src="scripts/decipher.mjs"></script>
-    <script type="module" src="scripts/fetchData.mjs"></script>
-    <script type="module" src="scripts/gameLogic.mjs"></script>
-    <script type="module" src="scripts/keyboard.mjs"></script>
-    <script type="module" src="scripts/score.mjs"></script>
-    <script type="module" src="scripts/utils.mjs"></script>
   </body>
 </html>

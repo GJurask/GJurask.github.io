@@ -55,11 +55,34 @@ function createRow(n) {
   wordDisplay.className = "word-display";
   wordDisplay.id = "word-display" + n;
 
+  const userIcon = document.createElement("div");
+  if (n == "espelho"){
+    userIcon.textContent = "✓";
+  }
+  userIcon.className = "user-icon";  
+  wordDisplay.appendChild(userIcon);
+
+  const arrowText = document.createElement("div");
+  arrowText.className = "arrow-text";
+  arrowText.textContent = "→";
+  wordDisplay.appendChild(arrowText);
+
   for (const letterToGuess of gameData.wordToGuess) {
     const letter = document.createElement("div");
+    if (n == "espelho"){
+      letter.textContent = "?";
+    }
     letter.className = "letter";
+    
     wordDisplay.appendChild(letter);
   }
+  const pointsText = document.createElement("div");
+  pointsText.classList.add("points-text");
+  pointsText.textContent = '+0';	
+  pointsText.classList.add("invisible");
+  wordDisplay.appendChild(pointsText);
+  
+
   return wordDisplay;
 }
 
@@ -161,9 +184,7 @@ export function initUI() {
   );
   buttonsSubjectButton.forEach((button) => {
     button.addEventListener("click", () => {
-      stopTimer();
-      changeSubject(button.id);
-      lerArquivoEPreencherArray(0);
+      newGame(button.id);
       toggleConfigModal();
     });
   });
@@ -187,6 +208,12 @@ export function initUI() {
       //none.classList.remove("display-none");
     });
   }, 2000);
+}
+
+export function newGame(subject) {
+  stopTimer();
+  changeSubject(subject);
+  lerArquivoEPreencherArray(0);
 }
 
 export function loadingLayer(showLoading) {

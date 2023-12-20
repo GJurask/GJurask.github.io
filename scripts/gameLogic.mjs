@@ -1,10 +1,12 @@
 import { getHint } from "./fetchData.mjs";
 import { highlightKeyboardKeys } from "./keyboard.mjs";
 import { gameData, PONTUACAO_MAXIMA } from "./main.mjs";
+import { saveTwitchPoints } from "./score.mjs";
 import {
   changeLetterColor,
   clearKeyStyles,
   createLetterGrid,
+  newGame,
   openEndScreen,
   showAnswer,
   showToast,
@@ -63,7 +65,8 @@ export function provideHint() {
 
   for (let i = espelhoLetras.length - 1; i >= 0; i--) {
     const j = posicoes[i];
-    if (espelhoLetras[j].textContent === "") {
+    let letter = espelhoLetras[j].textContent;
+    if (letter === "" || letter === "?") {
       espelhoLetras[j].textContent = gameData.wordToGuess[j];
       changeLetterColor(espelhoLetras[j], true);
       gameData.correctLetters.push(gameData.wordToGuess[j]);
@@ -119,7 +122,7 @@ export function changeSubject(subject) {
   gameData.subject = subject;
 }
 
-export function checkGuess() {
+export function checkGuess(username, userImg) {
   startTimer();
 
   const guessInput = document.getElementById("guess-input");
@@ -136,6 +139,8 @@ export function checkGuess() {
     "word-display" + gameData.attemptsLeft
   );
   const letters = wordDisplay.querySelectorAll(".letter");
+  const userIcon = wordDisplay.querySelector(".user-icon");
+  userIcon.style.backgroundImage = `url('${userImg}')`;
 
   const espelhoWordDisplay = document.getElementById("word-displayespelho");
   const espelhoLetters = espelhoWordDisplay.querySelectorAll(".letter");
@@ -143,18 +148,31 @@ export function checkGuess() {
   let copiaWordToGuess = removeAccents(gameData.wordToGuess).split("");
 
   let correctCount = 0;
-
+  let points = 0;
   for (let i = 0; i < gameData.wordToGuess.length; i++) {
     letters[i].textContent = guess[i];
     if (normalizedGuess[i] === removeAccents(gameData.wordToGuess[i])) {
       changeLetterColor(espelhoLetters[i], true);
       changeLetterColor(letters[i], true);
+
+      if (espelhoLetters[i].textContent == "?") {
+        points++;
+        //adiciono um ponto, animação de +1
+        //parar de dar o get e atualizar a pontuação em tela quando der sucesso.
+      }
+
       espelhoLetters[i].textContent = guess[i];
       gameData.correctLetters.push(normalizedGuess[i]);
       correctCount++;
       copiaWordToGuess[i] = "_";
       letters[i].classList.add("flip");
     }
+  }
+  if (points != 0) {
+    const pointsText = wordDisplay.querySelector(".points-text");
+    pointsText.textContent = `+${points}`;	
+    pointsText.classList.remove('invisible')
+    saveTwitchPoints(username, points, userImg);
   }
 
   for (let i = 0; i < gameData.wordToGuess.length; i++) {
@@ -175,12 +193,18 @@ export function checkGuess() {
     stopTimer();
     playAudio(victoryAudio);
     document.getElementById("guess-button").disabled = true;
-    openEndScreen();
+    //openEndScreen();
     for (let i = gameData.attemptsLeft - 1; i > 0; i--) {
       const wordDisplayX = document.getElementById("word-display" + i);
       wordDisplayX.innerHTML = "";
     }
 
+    setTimeout(function () {
+      newGame("all");
+    }, 10000);
+
+    highlightKeyboardKeys();
+    return true;
     //createConfetti();
   } else {
     gameData.attemptsLeft--;
@@ -195,6 +219,10 @@ export function checkGuess() {
 
       showAnswer(espelhoLetters);
       document.getElementById("guess-button").disabled = true;
+
+      setTimeout(function () {
+        newGame("all");
+      }, 10000);
     }
   }
 
