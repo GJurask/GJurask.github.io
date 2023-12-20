@@ -3,7 +3,7 @@
 import tmi from "tmi.js";
 import { handleTextUpdateInput } from "./keyboard.mjs";
 import { f5, gameData } from "./main.mjs";
-import { checkGuess } from "./gameLogic.mjs";
+import { checkGuess, provideHint } from "./gameLogic.mjs";
 import { getPosicao } from "./score.mjs";
 
 const channels = ["juraskpark"];
@@ -67,6 +67,8 @@ client.on("message", async (channel, tags, message, self) => {
   
   if (message.toLowerCase() === "!meuplacar") {
     client.say(channel, `@${tags.username} sua posição é ${getPosicao(tags.username)}º!`);
+  } if (message.toLowerCase() === "!meajuda") {
+    provideHint(tags.username);
   } else if (message.toLowerCase() === "!restartgame") {
     if (!f5()){
       client.say(channel, `@${tags.username} primeiro temos que terminar o jogo atual!`);
@@ -82,4 +84,47 @@ client.on("message", async (channel, tags, message, self) => {
       client.say(channel, `@${tags.username} tamanho incorreto`);
     }
   }
+
+  if (message.toLowerCase() === "!cardgame") {
+    cooldown[indexChannel] = new Date().getTime();
+    client.say(
+      channel,
+      `@${channel.substring(
+        1,
+        channel.length
+      )}, vai jogar Yu-Gi-Oh! Se não vou ter que chamar o Exódia!!!!!!`
+    );
+  }
+  if (message.toLowerCase() === "!paytowin") {
+    cooldown[indexChannel] = new Date().getTime();
+    client.say(
+      channel,
+      `O @${channel.substring(1, channel.length)} é muito pay to win`
+    );
+  }
+  if (message.toLowerCase() === "!peru") {
+    cooldown[indexChannel] = new Date().getTime();
+    client.say(
+      channel,
+      `O tamanho do seu peru é de ` +
+        (Math.floor(Math.random() * 50) + 5) +
+        "cm"
+    );
+  }
+  if (message.toLowerCase() === "!f") {
+    cooldown[indexChannel] = new Date().getTime();
+    client.say(channel, `@${channel.substring(1, channel.length)} faleceu`);
+  }
+  if (message.toLowerCase().includes("!gpt")) {
+    addToHistory(
+      tags.username,
+      tags.username + ": " + message.split("!gpt")[1] + "\n"
+    );
+    body.messages[0].content = historicoGpt[tags.username];
+    callGpt(channel, tags.username);
+  }
+
+  /*if (tags.username != 'magonegrodeolhosazuis' && tags.username != 'StreamElements'&& tags.username != 'JuraskPark') {
+      //client.say(channel, `!redeem tts ${tags.username.substring(0, 5)}: ` + message);
+  }*/
 });

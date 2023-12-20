@@ -117,7 +117,7 @@ export async function putPoints(response, leaderboard) {
   const scores = await response.json();
   gameData.leaderboard = scores;
 
-  scores.slice(0, 10).forEach((score, index) => {
+  scores.slice(0, 9).forEach((score, index) => {
     const row = document.createElement("tr");
     const playerPosCell = document.createElement("td");
     playerPosCell.textContent = `${index + 1}º`;

@@ -20,7 +20,7 @@ const fAudio = document.getElementById("fAudio");
 let custoDica = 0;
 let timerInterval;
 function startTimer() {
-  playAudio(timerAudio);
+  //playAudio(timerAudio);
 
   if (!timerInterval) {
     timerInterval = setInterval(function () {
@@ -58,7 +58,7 @@ export function initiateGame() {
   clearKeyStyles();
 }
 
-export function provideHint() {
+export function provideHint(username) {
   let respelhoResposta = document.getElementById("espelho-resposta");
   const espelhoLetras = respelhoResposta.querySelectorAll(".letter");
   const posicoes = arrayPosicoesAleatorias(gameData.wordToGuess.length);
@@ -73,6 +73,8 @@ export function provideHint() {
       startTimer();
       gameData.dicasDadas++;
       highlightKeyboardKeys();
+      
+      saveTwitchPoints(username, -2);
       break;
     }
   }
@@ -113,7 +115,7 @@ export function updateScore() {
 }
 
 export function stopTimer() {
-  timerAudio.pause();
+  //timerAudio.pause();
   clearInterval(timerInterval);
   timerInterval = undefined;
 }
@@ -168,13 +170,6 @@ export function checkGuess(username, userImg) {
       letters[i].classList.add("flip");
     }
   }
-  if (points != 0) {
-    const pointsText = wordDisplay.querySelector(".points-text");
-    pointsText.textContent = `+${points}`;	
-    pointsText.classList.remove('invisible')
-    saveTwitchPoints(username, points, userImg);
-  }
-
   for (let i = 0; i < gameData.wordToGuess.length; i++) {
     if (normalizedGuess[i] === removeAccents(gameData.wordToGuess[i])) {
     } else if (copiaWordToGuess.join("").includes(normalizedGuess[i])) {
@@ -199,6 +194,8 @@ export function checkGuess(username, userImg) {
       wordDisplayX.innerHTML = "";
     }
 
+    savePointsAndShow(wordDisplay, username, points + 2, userImg);
+
     setTimeout(function () {
       newGame("all");
     }, 10000);
@@ -219,11 +216,14 @@ export function checkGuess(username, userImg) {
 
       showAnswer(espelhoLetters);
       document.getElementById("guess-button").disabled = true;
-
+      savePointsAndShow(wordDisplay, username, points -2, userImg);
       setTimeout(function () {
         newGame("all");
       }, 10000);
-    }
+    } else if (points != 0) {
+      savePointsAndShow(wordDisplay, username, points, userImg);
+  }
+
   }
 
   guessInput.value = "";
@@ -231,3 +231,12 @@ export function checkGuess(username, userImg) {
 
   highlightKeyboardKeys();
 }
+function savePointsAndShow(htmlWordDisplayComponent, username, points, userImg, extraPointsToShow = 0) {
+  let sinal = "+";
+  if (points + extraPointsToShow < 0) sinal = "";
+  const pointsText = htmlWordDisplayComponent.querySelector(".points-text");
+  pointsText.textContent = `${sinal}${(points + extraPointsToShow)}`;
+  pointsText.classList.remove('invisible');
+  saveTwitchPoints(username, points, userImg);
+}
+

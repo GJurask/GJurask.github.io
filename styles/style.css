@@ -21,78 +21,10 @@
 body {
   font-family: monospace;
   text-align: center;
-  background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
-
-  transition: background-color 1s, color 1s;
-}
-
-body.dark-theme {
   background-color: var(--primary-text-color);
   color: var(--secondary-text-color);
 
-  .letter:not(:empty) {
-    background-color: #555;
-    border-color: #777;
-  }
-    
-  .red-font {
-    color: var(--accent-color);
-  }
-
-  .instruction-container, .scoreboard-twitch-container, .screen-container, .webcam-container {
-    color: var(--secondary-text-color);
-    background-color: var(--secondary-bg-color);
-  }
-  .wordle-container {
-    margin-top: 20px;
-    color: var(--secondary-text-color);
-    background-color: var(--secondary-bg-color);
-    padding: 10px 20px 20px 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-
-  #guess-input,
-  input {
-    padding: 10px;
-    margin: 10px;
-    text-transform: uppercase;
-    background-color: #555;
-    color: var(--secondary-text-color);
-    border: 1px solid #777;
-  }
-
-  .button {
-    padding: 10px 20px;
-    background-color: var(--accent-color);
-    color: #000;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-
-  .word-display {
-    color: #000;
-  }
-
-  #scoreboard {
-    background-color: var(--accent-color);
-    color: var(--secondary-text-color);
-  }
-
-  #scoreboard thead {
-    background-color: var(--accent-color);
-    color: var(--secondary-bg-color);
-  }
-
-  #scoreboard tbody tr:nth-child(even) {
-    background-color: var(--secondary-bg-color);
-  }
-
-  #scoreboard tbody tr:nth-child(odd) {
-    background-color: var(--primary-text-color);
-  }
+  transition: background-color 1s, color 1s;
 }
 
 .right-container, .left-container {
@@ -100,13 +32,18 @@ body.dark-theme {
   flex-direction: column;
 }
 
-.left-container{
+.right-container {  
   flex-grow: 1;
+}
+
+.left-container{
+  width: 725px
 }
 
 .instruction-container, .scoreboard-twitch-container {
   margin: 5px 5px 5px 20px;
-  background-color: var(--primary-bg-color);
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color);
   padding: 10px 20px 20px 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -115,13 +52,18 @@ body.dark-theme {
   text-align: left;
 }
 
+.wordle-container{
+  width: 600px;
+}
+
 .main-game{
-  max-width: 1200px;
+  width: 640px;
 }
 
 .screen-container, .webcam-container {
   margin: 5px 20px 5px 5px;
-  background-color: var(--primary-bg-color);
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color);
   padding: 10px 20px 20px 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -129,19 +71,20 @@ body.dark-theme {
   font-size: x-large;
   text-align: left;
 }
-
-.red-font {
-  color: var(--button-bg-color);
-}
-
-.scoreboard-twitch-container, .screen-container, .webcam-container {
+.scoreboard-twitch-container {
   flex-grow: 1;
   text-align: center;
 }
+.screen-container{
+  height: 450px;
+}
+
+.webcam-container{
+  height: 250px;
+}
 
 .wordle-container {
-  margin-top: 20px;
-  background-color: var(--primary-bg-color);
+  background-color: var(--secondary-bg-color);
   padding: 10px 20px 20px 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -149,6 +92,7 @@ body.dark-theme {
 }
 
 .word-display {
+  color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,16 +105,16 @@ input {
   padding: 10px;
   margin: 10px;
   text-transform: uppercase;
-  background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
+  background-color: #555;
+  color: var(--secondary-text-color);
   border: 1px solid #000;
   transition: background-color 1s, color 1s;
 }
 
 .button {
   padding: 10px 20px;
-  background-color: var(--button-bg-color);
-  color: var(--secondary-text-color);
+  background-color: var(--accent-color);
+  color: #000;
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -364,8 +308,8 @@ input {
 #scoreboard {
   border-collapse: collapse;
   width: 100%;
-  background-color: var(--button-bg-color);
-  color: var(--primary-text-color);
+  background-color: var(--accent-color);
+  color: var(--secondary-text-color);
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -373,8 +317,8 @@ input {
 }
 
 #scoreboard thead {
-  background-color: var(--button-bg-color);
-  color: var(--secondary-text-color);
+  background-color: var(--accent-color);
+  color: var(--secondary-bg-color);
 }
 
 #scoreboard th {
@@ -382,11 +326,11 @@ input {
 }
 
 #scoreboard tbody tr:nth-child(even) {
-  background-color: #d7d7d7;
+  background-color: var(--secondary-bg-color);
 }
 
 #scoreboard tbody tr:nth-child(odd) {
-  background-color: var(--primary-bg-color);
+  background-color: var(--primary-text-color);
 }
 
 .scoreboard-container {
@@ -399,7 +343,7 @@ input {
 }
 
 .main-game {
-  flex-grow: 1;
+  flex-grow: 0;
 }
 
 
@@ -515,7 +459,7 @@ input {
 }
 
 .red-font {
-  color: red;
+  color: var(--accent-color);
   font-weight: bold;
 }
 
@@ -627,8 +571,8 @@ input {
 
 
 .letter:not(:empty) {
-  background-color: #d3d3d3;
-  border-color: black;
+  background-color: #555;
+  border-color: #777;
 }
 
 .letter:empty {
